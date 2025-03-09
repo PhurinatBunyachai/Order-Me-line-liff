@@ -9,7 +9,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-
+    "composite": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
