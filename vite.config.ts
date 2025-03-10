@@ -6,7 +6,7 @@ import autoprefixer from 'autoprefixer'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/sketchy',
+  base: '/Order-Me-line-liff',
   css: {
     postcss: {
       plugins: [tailwind(), autoprefixer()]
