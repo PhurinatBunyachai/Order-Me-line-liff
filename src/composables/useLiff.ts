@@ -8,7 +8,7 @@ export const useLiff = () => {
   const error = ref<Error | null>(null)
 
   const initialize = async () => {
-    const liffId = import.meta.env.VITE_LIFF_ID
+    const liffId = import.meta.env.APP_LIFF_ID
 
     try {
       if (!liffId) {

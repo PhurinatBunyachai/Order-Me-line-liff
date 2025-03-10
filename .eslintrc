@@ -13,5 +13,6 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint", "vue", "prettier"],
-  "rules": { "prettier/prettier": "error" }
+  "rules": { "prettier/prettier": "error" },
+  "ignorePatterns": ["src/components/ui/**"]
 }

@@ -11,6 +11,7 @@ export default defineConfig({
       plugins: [tailwind(), autoprefixer()]
     }
   },
+  envPrefix: 'APP_',
   plugins: [vue()],
   resolve: {
     alias: {
