@@ -4,6 +4,21 @@ export default {
   darkMode: ['class'],
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
+    fontFamily: {
+      // Override the default sans font family
+      sans: [
+        '"IBM Plex Sans Thai"',
+        'ui-sans-serif',
+        'system-ui',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe UI',
+        'Roboto',
+        'Helvetica Neue',
+        'Arial',
+        'sans-serif'
+      ]
+    },
     extend: {
       borderRadius: {
         lg: 'var(--radius)',
