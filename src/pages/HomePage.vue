@@ -21,7 +21,7 @@ import {
           <DrawerDescription>This action cannot be undone.</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>
-          <Button>Submit</Button>
+          <!-- <Button>Submit</Button> -->
           <DrawerClose>
             <!-- <Button variant="outline"> Cancel </Button> -->
           </DrawerClose>
