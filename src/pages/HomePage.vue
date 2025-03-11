@@ -9,6 +9,7 @@ import {
   DrawerTitle,
   DrawerTrigger
 } from '@/components/ui/drawer'
+import { Button } from '@/components/ui/button'
 </script>
 
 <template>
@@ -21,9 +22,9 @@ import {
           <DrawerDescription>This action cannot be undone.</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>
-          <!-- <Button>Submit</Button> -->
+          <Button>Submit</Button>
           <DrawerClose>
-            <!-- <Button variant="outline"> Cancel </Button> -->
+            <Button variant="outline"> Cancel </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
