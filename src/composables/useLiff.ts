@@ -6,6 +6,7 @@ export const useLiff = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const profile = ref<any>(null)
   const error = ref<Error | null>(null)
+  const isInClient = ref<boolean>(false)
 
   const initialize = async () => {
     const liffId = import.meta.env.APP_LIFF_ID
@@ -21,6 +22,7 @@ export const useLiff = () => {
       })
 
       isInitialized.value = true
+      isInClient.value = liff.isInClient()
 
       if (!liff.isLoggedIn()) {
         liff.login()
@@ -48,10 +50,6 @@ export const useLiff = () => {
 
   const closeWindow = () => {
     liff.closeWindow()
-  }
-
-  const isInClient = () => {
-    liff.isInClient()
   }
 
   return {

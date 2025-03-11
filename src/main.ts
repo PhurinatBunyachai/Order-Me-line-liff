@@ -4,10 +4,11 @@ import App from './App.vue'
 import { router } from '@/route/router.ts'
 import { useLiff } from '@/composables/useLiff.ts'
 
-const { initialize } = useLiff()
+const { initialize, isInClient } = useLiff()
 const app = createApp(App)
 
 app.use(router)
 app.mount('#app')
-
-initialize()
+if (!isInClient) {
+  initialize()
+}
