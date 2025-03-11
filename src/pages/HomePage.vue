@@ -23,7 +23,7 @@ import {
         <DrawerFooter>
           <Button>Submit</Button>
           <DrawerClose>
-            <Button variant="outline"> Cancel </Button>
+            <!-- <Button variant="outline"> Cancel </Button> -->
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
