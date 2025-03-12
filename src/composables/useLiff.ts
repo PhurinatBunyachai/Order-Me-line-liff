@@ -1,16 +1,11 @@
 import { ref } from 'vue'
 import liff from '@line/liff'
+import type { Profile } from '@/types'
 
-interface Profile {
-  userId: string
-  displayName: string | null
-  pictureUrl: string
-  statusMessage: string | null
-}
 export const useLiff = () => {
   const isInitialized = ref(false)
 
-  const profile = ref<Profile>()
+  const profile = ref<Profile>(<Profile>{})
   const error = ref<Error | null>(null)
   const isInClient = ref<boolean>(false)
 
