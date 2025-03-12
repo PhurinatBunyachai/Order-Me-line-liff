@@ -39,9 +39,9 @@ export const useLiff = () => {
       if (!isInitialized.value) {
         await initialize()
       }
-      const liffProfile = (await liff.getProfile()) as Profile
-      profile.value = liffProfile
-      return liffProfile
+      const data = (await liff.getProfile()) as Profile
+      profile.value = data
+      return profile
     } catch (err) {
       error.value = err as Error
       console.error('Failed to get LIFF profile', err)
