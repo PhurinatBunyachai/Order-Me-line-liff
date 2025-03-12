@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { Header } from '@/components/herder'
 import { useLiff } from '@/composables/useLiff'
-const { profile } = useLiff()
+
+const { getProfile, profile } = useLiff()
+onMounted(async () => {
+  await getProfile()
+})
 </script>
 
 <template>

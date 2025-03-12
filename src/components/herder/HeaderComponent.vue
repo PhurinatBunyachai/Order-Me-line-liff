@@ -11,12 +11,11 @@ defineProps({
 
 <template>
   <div class="h-[50px] w-screen bg-green-600">
-    {{ profile }}
     <div class="flex h-full w-full flex-row items-center justify-between px-10">
       <div class="flex flex-row items-center gap-3">
         <Avatar>
           <AvatarImage :src="profile.pictureUrl" alt="profileImg" />
-          <AvatarFallback>test</AvatarFallback>
+          <AvatarFallback>{{ profile.displayName.substring(0, 2) }}</AvatarFallback>
         </Avatar>
         <div class="text-lg font-semibold text-white">{{ title }}</div>
       </div>

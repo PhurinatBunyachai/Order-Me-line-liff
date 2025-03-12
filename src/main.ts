@@ -5,7 +5,7 @@ import { router } from '@/route/router.ts'
 import { useLiff } from '@/composables/useLiff.ts'
 import { createPinia } from 'pinia'
 
-const { initialize, getProfile } = useLiff()
+const { initialize } = useLiff()
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -15,4 +15,3 @@ app.use(pinia)
 app.mount('#app')
 
 initialize()
-getProfile()
