@@ -41,7 +41,6 @@ export const useLiff = () => {
       }
       const data = (await liff.getProfile()) as Profile
       profile.value = data
-      console.log('LIFF profile', profile.value)
     } catch (err) {
       error.value = err as Error
       console.error('Failed to get LIFF profile', err)

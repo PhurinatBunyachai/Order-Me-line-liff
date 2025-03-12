@@ -15,7 +15,7 @@ defineProps({
       <div class="flex flex-row items-center gap-3">
         <Avatar>
           <AvatarImage :src="profile.pictureUrl" alt="profileImg" />
-          <AvatarFallback>{{ profile.displayName.substring(0, 2) }}</AvatarFallback>
+          <AvatarFallback>SK</AvatarFallback>
         </Avatar>
         <div class="text-lg font-semibold text-white">{{ title }}</div>
       </div>
