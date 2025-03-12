@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="w-screen">หห</div>
+  <div class="h-[50px] w-screen bg-green-600">หห</div>
 </template>
