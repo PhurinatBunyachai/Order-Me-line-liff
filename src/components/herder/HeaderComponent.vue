@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 defineProps({
   profile: {
@@ -7,18 +14,27 @@ defineProps({
   },
   title: String
 })
+const isAvatarMenuOpen = ref<boolean>(false)
 </script>
 
 <template>
   <div class="h-[50px] w-screen bg-green-600">
-    <div class="flex h-full w-full flex-row items-center justify-between px-10">
+    <div class="flex h-full w-full flex-row items-center justify-around px-10">
+      <div>dd</div>
       <div class="flex flex-row items-center gap-3">
-        <Avatar>
-          <AvatarImage :src="profile.pictureUrl" alt="profileImg" />
-          <AvatarFallback>SK</AvatarFallback>
-        </Avatar>
         <div class="text-lg font-semibold text-white">{{ title }}</div>
       </div>
+      <DropdownMenu v-model:open="isAvatarMenuOpen">
+        <DropdownMenuTrigger>
+          <Avatar>
+            <AvatarImage :src="profile.pictureUrl" alt="profileImg" />
+            <AvatarFallback>SK</AvatarFallback>
+          </Avatar>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Your Profile</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   </div>
 </template>
