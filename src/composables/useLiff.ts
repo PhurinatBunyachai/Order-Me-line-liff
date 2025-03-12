@@ -1,10 +1,16 @@
 import { ref } from 'vue'
 import liff from '@line/liff'
 
+interface Profile {
+  userId: string
+  displayName: string | null
+  pictureUrl: string
+  statusMessage: string | null
+}
 export const useLiff = () => {
   const isInitialized = ref(false)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const profile = ref<any>(null)
+
+  const profile = ref<Profile>()
   const error = ref<Error | null>(null)
   const isInClient = ref<boolean>(false)
 
@@ -38,7 +44,7 @@ export const useLiff = () => {
       if (!isInitialized.value) {
         await initialize()
       }
-      const liffProfile = await liff.getProfile()
+      const liffProfile = (await liff.getProfile()) as Profile
       profile.value = liffProfile
       return liffProfile
     } catch (err) {
