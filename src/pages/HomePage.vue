@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import {
   Drawer,
   DrawerClose,
@@ -6,16 +7,51 @@ import {
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger
+  DrawerTitle
+  // DrawerTrigger
 } from '@/components/ui/drawer'
 import { Button } from '@/components/ui/button'
+import { ProductCard } from '@/components/product'
+import type { Product } from '@/types'
+// Example product data
+const products = [
+  {
+    id: 1,
+    name: 'americano',
+    price: 60,
+    image: '',
+    description: ''
+  },
+  {
+    id: 2,
+    name: 'latte',
+    price: 50,
+    image: '',
+    description: ''
+  }
+]
+const isOpen = ref<boolean>(false)
+const onAddToCart = (product: Product) => {
+  isOpen.value = true
+  console.log(product)
+  console.log(isOpen.value)
+}
 </script>
 
 <template>
   <div>
-    <Drawer>
-      <DrawerTrigger>Open</DrawerTrigger>
+    <h1 class="mb-2 mt-2 w-full text-center">Menu</h1>
+    <div class="grid w-full grid-cols-2 gap-2 px-2">
+      <ProductCard
+        v-for="product in products"
+        :product="product"
+        :key="product.id"
+        @click="onAddToCart(product)"
+      />
+    </div>
+
+    <Drawer v-model:open="isOpen">
+      <!-- <DrawerTrigger as-child>Open</DrawerTrigger> -->
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
