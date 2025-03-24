@@ -19,22 +19,24 @@ const isAvatarMenuOpen = ref<boolean>(false)
 
 <template>
   <div class="h-[50px] w-screen bg-green-600">
-    <div class="flex h-full w-full flex-row items-center justify-around px-10">
-      <div>dd</div>
+    <div class="flex h-full w-full flex-row items-center justify-between px-10">
+      <div></div>
       <div class="flex flex-row items-center gap-3">
         <div class="text-lg font-semibold text-white">{{ title }}</div>
       </div>
-      <DropdownMenu v-model:open="isAvatarMenuOpen">
-        <DropdownMenuTrigger>
-          <Avatar>
-            <AvatarImage :src="profile.pictureUrl" alt="profileImg" />
-            <AvatarFallback>SK</AvatarFallback>
-          </Avatar>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem>Your Profile</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div class="mt-2 flex items-center justify-center">
+        <DropdownMenu v-model:open="isAvatarMenuOpen">
+          <DropdownMenuTrigger>
+            <Avatar>
+              <AvatarImage :src="profile.pictureUrl" alt="profileImg" />
+              <AvatarFallback>SK</AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>Your Profile</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </div>
   </div>
 </template>
