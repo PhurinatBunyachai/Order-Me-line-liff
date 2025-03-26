@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import {
   Drawer,
   DrawerClose,
@@ -8,31 +9,17 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle
-  // DrawerTrigger
 } from '@/components/ui/drawer'
 import { Button } from '@/components/ui/button'
 import { ProductCard } from '@/components/product'
 import type { Product } from '@/types'
-// Example product data
-const products = [
-  {
-    id: 1,
-    name: 'americano',
-    price: 60,
-    image: '',
-    description: ''
-  },
-  {
-    id: 2,
-    name: 'latte',
-    price: 50,
-    image: '',
-    description: ''
-  }
-]
+import { useProductStore } from '@/stores/product'
+
+const productStore = useProductStore()
+const { products } = storeToRefs(productStore)
 const isOpen = ref<boolean>(false)
 const onAddToCart = (product: Product) => {
-  isOpen.value = true
+  isOpen.value = !isOpen.value
   console.log(product)
   console.log(isOpen.value)
 }
@@ -50,14 +37,13 @@ const onAddToCart = (product: Product) => {
       />
     </div>
 
-    <Drawer v-model:open="isOpen">
-      <!-- <DrawerTrigger as-child>Open</DrawerTrigger> -->
+    <Drawer :open="isOpen">
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
           <DrawerDescription>This action cannot be undone.</DrawerDescription>
         </DrawerHeader>
-        <div class="">test</div>
+        <div>test</div>
         <DrawerFooter>
           <Button>Submit</Button>
           <DrawerClose>
