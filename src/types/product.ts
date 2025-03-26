@@ -3,7 +3,7 @@ export interface Product {
   name: string
   price: number
   category: string
-  image: string | 'https://placehold.co/600x400?text=Hello+World'
+  image: string
   description: string
   available: boolean
 }

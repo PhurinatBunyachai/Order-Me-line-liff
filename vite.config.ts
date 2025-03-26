@@ -6,7 +6,7 @@ import path from 'node:path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/Order-Me-line-liff',
+  base: '',
   css: {
     postcss: {
       plugins: [tailwind(), autoprefixer()]
