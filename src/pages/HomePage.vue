@@ -17,7 +17,7 @@ import { useProductStore } from '@/stores/product'
 
 const productStore = useProductStore()
 const { products } = storeToRefs(productStore)
-const isOpen = ref<boolean>(false)
+let isOpen = ref<boolean>(false)
 const onAddToCart = (product: Product) => {
   isOpen.value = !isOpen.value
   console.log(product)
@@ -43,7 +43,7 @@ const onAddToCart = (product: Product) => {
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
           <DrawerDescription>This action cannot be undone.</DrawerDescription>
         </DrawerHeader>
-        <div>test</div>
+        <div class="m-h-[200px]">dasadsadsadsads</div>
         <DrawerFooter>
           <Button>Submit</Button>
           <DrawerClose>
