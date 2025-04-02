@@ -80,7 +80,7 @@ export const useNotion = () => {
         body: JSON.stringify({
           parent: { database_id: databaseId },
           properties: {
-            Name: {
+            'Order Name': {
               title: [
                 {
                   text: {
@@ -88,6 +88,32 @@ export const useNotion = () => {
                   }
                 }
               ]
+            },
+            Sweet: {
+              number: 42
+            },
+            'User ID': {
+              rich_text: [
+                {
+                  text: {
+                    content: 'User ID'
+                  }
+                }
+              ]
+            },
+            Note: {
+              rich_text: [
+                {
+                  text: {
+                    content: 'Note'
+                  }
+                }
+              ]
+            },
+            'Order Date': {
+              date: {
+                start: new Date().toISOString()
+              }
             }
           }
         })
