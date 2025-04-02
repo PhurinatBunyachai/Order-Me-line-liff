@@ -17,13 +17,10 @@ import { useNotion } from '@/composables/useNotion'
 
 const productStore = useProductStore()
 const { products } = storeToRefs(productStore)
-const { initNotion, getDatabase } = useNotion()
+const { initNotion } = useNotion()
 
 onMounted(async () => {
   await initNotion()
-
-  const test = await getDatabase()
-  console.log(test)
 })
 
 let isOpen = ref<boolean>(false)

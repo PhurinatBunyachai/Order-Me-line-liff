@@ -63,20 +63,35 @@ export const useNotion = () => {
     }
   }
 
-  const updateDatabase = async (
-    pageId: string,
-    properties: Record<string, NotionProperty>
-  ): Promise<NotionPage | null> => {
+  const updateDatabase = async (): Promise<NotionPage | null> => {
     if (!client.value) {
       throw new Error('Notion client not initialized')
     }
 
     isLoading.value = true
     try {
-      const response = await client.value.pages.update({
-        page_id: pageId,
-        properties: properties as Parameters<Client['pages']['update']>[0]['properties']
-      })
+      const response = await fetch(`/api/notion/pages/`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Notion-Version': '2022-06-28',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          parent: { database_id: databaseId },
+          properties: {
+            Name: {
+              title: [
+                {
+                  text: {
+                    content: 'New Item'
+                  }
+                }
+              ]
+            }
+          }
+        })
+      }).then((res) => res.json())
       return response as NotionPage
     } catch (err) {
       error.value = err as Error
