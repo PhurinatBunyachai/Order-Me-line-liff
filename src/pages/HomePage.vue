@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
@@ -14,9 +13,19 @@ import { Button } from '@/components/ui/button'
 import { ProductCard } from '@/components/product'
 import type { Product } from '@/types'
 import { useProductStore } from '@/stores/product'
+import { useNotion } from '@/composables/useNotion'
 
 const productStore = useProductStore()
 const { products } = storeToRefs(productStore)
+const { initNotion, getDatabase } = useNotion()
+
+onMounted(async () => {
+  await initNotion()
+
+  const test = await getDatabase()
+  console.log(test)
+})
+
 let isOpen = ref<boolean>(false)
 const onAddToCart = (product: Product) => {
   isOpen.value = !isOpen.value
@@ -46,9 +55,6 @@ const onAddToCart = (product: Product) => {
         <div class="m-h-[200px]">dasadsadsadsads</div>
         <DrawerFooter>
           <Button>Submit</Button>
-          <DrawerClose>
-            <Button variant="outline"> Cancel </Button>
-          </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

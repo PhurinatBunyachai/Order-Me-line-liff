@@ -12,6 +12,20 @@ export default defineConfig({
       plugins: [tailwind(), autoprefixer()]
     }
   },
+  server: {
+    proxy: {
+      '/api/notion': {
+        target: 'https://api.notion.com/v1',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/notion/, '')
+      }
+    },
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'Notion-Version']
+    }
+  },
   envPrefix: 'APP_',
   plugins: [vue()],
   resolve: {
