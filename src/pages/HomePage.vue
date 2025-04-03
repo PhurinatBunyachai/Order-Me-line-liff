@@ -9,6 +9,15 @@ import {
   DrawerHeader,
   DrawerTitle
 } from '@/components/ui/drawer'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { ProductCard } from '@/components/product'
 import type { Product } from '@/types'
@@ -26,6 +35,7 @@ onMounted(async () => {
 const isOpen = ref<boolean>(false)
 const productSelect = ref<Product>()
 let carts = ref([])
+let level = ref()
 
 const onSelectProduct = (product: Product) => {
   isOpen.value = !isOpen.value
@@ -56,9 +66,25 @@ const onAddToCart = () => {
           <DrawerTitle>{{ productSelect?.name }}</DrawerTitle>
           <DrawerDescription>เราใช้เมล็ดคั่วกลางทุกแก้ว</DrawerDescription>
         </DrawerHeader>
-        <div class="m-h-[500px]">
-          <div class="flex">
-            <span>Sweetness</span>
+        <div class="m-h-[500px] px-4">
+          <div class="flex flex-col">
+            <span class="text-sm">Sweetness</span>
+            <Select v-model="level">
+              <SelectTrigger>
+                <SelectValue placeholder="Select a Level" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Level</SelectLabel>
+                  <SelectItem value="100"> 100 </SelectItem>
+                  <SelectItem value="75"> 75 </SelectItem>
+                  <SelectItem value="50"> 50 </SelectItem>
+                  <SelectItem value="25"> 25 </SelectItem>
+                  <SelectItem value="0"> 0 </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <span class="mt-2 text-sm">Note</span>
           </div>
         </div>
         <DrawerFooter>
