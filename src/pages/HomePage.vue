@@ -93,7 +93,7 @@ const onReset = () => {
 
     <div class="absolute bottom-0 min-w-full">
       <div
-        class="fixed bottom-0 left-0 right-0 flex cursor-pointer items-center justify-center bg-primary p-4 text-primary-foreground shadow-lg transition-colors hover:bg-primary/90"
+        class="fixed bottom-0 left-0 right-0 flex cursor-pointer items-center justify-center rounded-t-lg bg-primary p-4 text-primary-foreground shadow-lg transition-colors hover:bg-primary/90"
         @click="isOpenCart = true"
       >
         <ShoppingCart class="mr-2 h-5 w-5" />
@@ -155,7 +155,7 @@ const onReset = () => {
               <div class="flex flex-col">
                 <span class="font-semibold">{{ cart.name }}</span>
                 <span class="text-sm text-gray-600">Sweetness: {{ cart.sweetness }} %</span>
-                <span v-if="cart.note" class="text-sm text-gray-600">Note: {{ cart.note }}</span>
+                <span v-if="cart.note" class="text-sm text-gray-600"> Note: {{ cart.note }} </span>
               </div>
               <div class="flex items-center gap-2">
                 <span class="font-bold">{{ cart.price }} THB</span>
