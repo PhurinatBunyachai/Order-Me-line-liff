@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import {
   Drawer,
@@ -27,7 +27,7 @@ import { useNotion } from '@/composables/useNotion'
 
 const productStore = useProductStore()
 const { products } = storeToRefs(productStore)
-const { initNotion } = useNotion()
+const { initNotion, updateDatabase } = useNotion()
 
 onMounted(async () => {
   await initNotion()
@@ -35,7 +35,8 @@ onMounted(async () => {
 
 const isOpen = ref<boolean>(false)
 const productSelect = ref<ProductCart>()
-let carts = ref([])
+const totalPrice = computed(() => carts.value.reduce((acc, cart) => acc + cart.price, 0))
+let carts = ref<ProductCart[]>([])
 let level = ref()
 let note = ref('')
 
@@ -46,7 +47,28 @@ const onSelectProduct = (product: Product) => {
 
 const onAddToCart = () => {
   isOpen.value = false
-  carts.value = []
+  if (productSelect.value) {
+    carts.value = [
+      ...carts.value,
+      { ...productSelect.value, sweetness: level.value, note: note.value }
+    ]
+  }
+  onReset()
+}
+const onSubmit = async () => {
+  if (!carts.value.length) {
+    return
+  }
+  for (let cart of carts.value) {
+    await updateDatabase(cart)
+  }
+  await onReset
+}
+const onReset = () => {
+  isOpen.value = false
+  productSelect.value = undefined
+  level.value = undefined
+  note.value = ''
 }
 </script>
 
@@ -61,7 +83,13 @@ const onAddToCart = () => {
         @click="onSelectProduct(product)"
       />
     </div>
-    <div class="absolute bottom-0">Cart Summary</div>
+
+    <div class="absolute bottom-0 min-w-full">
+      <div class="pa-4 h-10 bg-red-700 text-center" @click="onSubmit">
+        My Cart ฿{{ totalPrice }}
+      </div>
+    </div>
+
     <Drawer :open="isOpen">
       <DrawerContent>
         <DrawerHeader>
@@ -71,32 +99,32 @@ const onAddToCart = () => {
         <div class="m-h-[500px] px-4">
           <div class="flex flex-col">
             <div class="mb-2 grid w-full max-w-sm items-center gap-1">
-              <Label for="note" class="text-sm">Sweetness</Label>
-              <Select v-model="level">
+              <label for="level" class="text-sm">Sweetness</label>
+              <Select id="level" v-model="level">
                 <SelectTrigger>
                   <SelectValue placeholder="Select a Level" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Level</SelectLabel>
-                    <SelectItem value="100"> 100 </SelectItem>
-                    <SelectItem value="75"> 75 </SelectItem>
-                    <SelectItem value="50"> 50 </SelectItem>
-                    <SelectItem value="25"> 25 </SelectItem>
-                    <SelectItem value="0"> 0 </SelectItem>
+                    <SelectItem :value="100"> 100 </SelectItem>
+                    <SelectItem :value="75"> 75 </SelectItem>
+                    <SelectItem :value="50"> 50 </SelectItem>
+                    <SelectItem :value="25"> 25 </SelectItem>
+                    <SelectItem :value="0"> 0 </SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
             </div>
             <div class="grid w-full max-w-sm items-center gap-1">
-              <Label for="note" class="text-sm">Note</Label>
+              <label for="note" class="text-sm">Note</label>
               <Input id="note" type="text" placeholder="Note" v-model="note" />
             </div>
           </div>
         </div>
         <DrawerFooter>
-          <Button @click="onAddToCart">Add To Cart ฿{{ productSelect?.price }}</Button>
-          <Button @click="isOpen = !isOpen" variant="outline">Cancel</Button>
+          <Button @click="onAddToCart">Add To Cart (฿{{ productSelect?.price }})</Button>
+          <Button @click="onReset" variant="outline">Cancel</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

@@ -1,6 +1,6 @@
 import { Client } from '@notionhq/client'
 import { ref } from 'vue'
-
+import type { ProductCart } from '@/types'
 type NotionProperty = {
   title?: { plain_text: string }[]
   rich_text?: { plain_text: string }[]
@@ -63,7 +63,7 @@ export const useNotion = () => {
     }
   }
 
-  const updateDatabase = async (): Promise<NotionPage | null> => {
+  const updateDatabase = async (cart: ProductCart): Promise<NotionPage | null> => {
     if (!client.value) {
       throw new Error('Notion client not initialized')
     }
@@ -84,19 +84,19 @@ export const useNotion = () => {
               title: [
                 {
                   text: {
-                    content: 'New Item'
+                    content: cart.name
                   }
                 }
               ]
             },
-            Sweet: {
-              number: 42
+            Sweetness: {
+              number: cart.sweetness
             },
             'User ID': {
               rich_text: [
                 {
                   text: {
-                    content: 'User ID'
+                    content: 'wait'
                   }
                 }
               ]
@@ -105,7 +105,34 @@ export const useNotion = () => {
               rich_text: [
                 {
                   text: {
-                    content: 'Note'
+                    content: cart.note
+                  }
+                }
+              ]
+            },
+            Buliding: {
+              rich_text: [
+                {
+                  text: {
+                    content: 'wait'
+                  }
+                }
+              ]
+            },
+            'Room ID': {
+              rich_text: [
+                {
+                  text: {
+                    content: 'wait'
+                  }
+                }
+              ]
+            },
+            Tel: {
+              rich_text: [
+                {
+                  text: {
+                    content: 'wait'
                   }
                 }
               ]
