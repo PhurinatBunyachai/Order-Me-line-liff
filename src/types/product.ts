@@ -12,4 +12,5 @@ export interface Product {
 export interface ProductCart extends Product {
   sweetness?: 100 | 75 | 50 | 25 | 0
   note?: string
+  quantity?: number
 }

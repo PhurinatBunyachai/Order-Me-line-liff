@@ -33,7 +33,8 @@ onMounted(async () => {
   await initNotion()
 })
 
-const isOpen = ref<boolean>(false)
+const isOpenProduct = ref<boolean>(false)
+const isOpenCart = ref<boolean>(false)
 const productSelect = ref<ProductCart>()
 const totalPrice = computed(() => carts.value.reduce((acc, cart) => acc + cart.price, 0))
 let carts = ref<ProductCart[]>([])
@@ -41,12 +42,12 @@ let level = ref()
 let note = ref('')
 
 const onSelectProduct = (product: Product) => {
-  isOpen.value = !isOpen.value
+  isOpenProduct.value = !isOpenProduct.value
   productSelect.value = product
 }
 
 const onAddToCart = () => {
-  isOpen.value = false
+  isOpenProduct.value = false
   if (productSelect.value) {
     carts.value = [
       ...carts.value,
@@ -63,10 +64,14 @@ const onSubmit = async () => {
     await updateDatabase(cart)
   }
   carts.value = []
+  isOpenCart.value = false
   await onReset
 }
+const onRemoveFromCart = (index: number) => {
+  carts.value.splice(index, 1)
+}
 const onReset = () => {
-  isOpen.value = false
+  isOpenProduct.value = false
   productSelect.value = undefined
   level.value = undefined
   note.value = ''
@@ -80,18 +85,23 @@ const onReset = () => {
       <ProductCard
         v-for="product in products"
         :product="product"
+        :carts="carts"
         :key="product.id"
         @click="onSelectProduct(product)"
       />
     </div>
 
     <div class="absolute bottom-0 min-w-full">
-      <div class="pa-4 h-10 bg-red-700 text-center" @click="onSubmit">
-        My Cart ฿{{ totalPrice }}
+      <div
+        class="fixed bottom-0 left-0 right-0 flex cursor-pointer items-center justify-center bg-primary p-4 text-primary-foreground shadow-lg transition-colors hover:bg-primary/90"
+        @click="isOpenCart = true"
+      >
+        <ShoppingCart class="mr-2 h-5 w-5" />
+        <span>My Cart ({{ totalPrice }} THB)</span>
       </div>
     </div>
 
-    <Drawer :open="isOpen">
+    <Drawer :open="isOpenProduct">
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>{{ productSelect?.name }}</DrawerTitle>
@@ -108,11 +118,11 @@ const onReset = () => {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Level</SelectLabel>
-                    <SelectItem :value="100"> 100 </SelectItem>
-                    <SelectItem :value="75"> 75 </SelectItem>
-                    <SelectItem :value="50"> 50 </SelectItem>
-                    <SelectItem :value="25"> 25 </SelectItem>
-                    <SelectItem :value="0"> 0 </SelectItem>
+                    <SelectItem :value="100"> 100 % </SelectItem>
+                    <SelectItem :value="75"> 75 % </SelectItem>
+                    <SelectItem :value="50"> 50 % </SelectItem>
+                    <SelectItem :value="25"> 25 % </SelectItem>
+                    <SelectItem :value="0"> 0 % </SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -124,8 +134,39 @@ const onReset = () => {
           </div>
         </div>
         <DrawerFooter>
-          <Button @click="onAddToCart">Add To Cart (฿{{ productSelect?.price }})</Button>
+          <Button @click="onAddToCart">Add To Cart ({{ productSelect?.price }} THB)</Button>
           <Button @click="onReset" variant="outline">Cancel</Button>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+    <Drawer :open="isOpenCart">
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>My Cart</DrawerTitle>
+          <DrawerDescription>Total: {{ totalPrice }} THB</DrawerDescription>
+        </DrawerHeader>
+        <div class="m-h-[500px] px-4">
+          <div class="flex flex-col gap-4">
+            <div
+              v-for="(cart, index) in carts"
+              :key="cart.id"
+              class="flex items-center justify-between rounded-lg border p-4"
+            >
+              <div class="flex flex-col">
+                <span class="font-semibold">{{ cart.name }}</span>
+                <span class="text-sm text-gray-600">Sweetness: {{ cart.sweetness }} %</span>
+                <span v-if="cart.note" class="text-sm text-gray-600">Note: {{ cart.note }}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold">{{ cart.price }} THB</span>
+                <Button variant="outline" size="sm" @click="onRemoveFromCart(index)">Remove</Button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <DrawerFooter>
+          <Button :disabled="!totalPrice" @click="onSubmit">Submit Order</Button>
+          <Button @click="isOpenCart = false" variant="outline">Close</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
