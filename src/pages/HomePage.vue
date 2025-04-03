@@ -62,6 +62,7 @@ const onSubmit = async () => {
   for (let cart of carts.value) {
     await updateDatabase(cart)
   }
+  carts.value = []
   await onReset
 }
 const onReset = () => {
