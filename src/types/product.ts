@@ -8,3 +8,8 @@ export interface Product {
   available: boolean
   sweetness?: 100 | 75 | 50 | 25 | 0
 }
+
+export interface ProductCart extends Product {
+  sweetness?: 100 | 75 | 50 | 25 | 0
+  note?: string
+}

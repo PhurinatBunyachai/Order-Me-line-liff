@@ -21,7 +21,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ProductCard } from '@/components/product'
-import type { Product } from '@/types'
+import type { Product, ProductCart } from '@/types'
 import { useProductStore } from '@/stores/product'
 import { useNotion } from '@/composables/useNotion'
 
@@ -34,9 +34,10 @@ onMounted(async () => {
 })
 
 const isOpen = ref<boolean>(false)
-const productSelect = ref<Product>()
+const productSelect = ref<ProductCart>()
 let carts = ref([])
 let level = ref()
+let note = ref('')
 
 const onSelectProduct = (product: Product) => {
   isOpen.value = !isOpen.value
@@ -89,7 +90,7 @@ const onAddToCart = () => {
             </div>
             <div class="grid w-full max-w-sm items-center gap-1">
               <Label for="note" class="text-sm">Note</Label>
-              <Input id="note" type="text" placeholder="Note" />
+              <Input id="note" type="text" placeholder="Note" v-model="note" />
             </div>
           </div>
         </div>
