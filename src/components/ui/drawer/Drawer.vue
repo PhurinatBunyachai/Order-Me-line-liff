@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import type { DrawerRootEmits, DrawerRootProps } from 'vaul-vue'
 import { useForwardPropsEmits } from 'reka-ui'
@@ -10,11 +9,11 @@ const props = withDefaults(defineProps<DrawerRootProps>(), {
 
 const emits = defineEmits<DrawerRootEmits>()
 
-const forwarded = useForwardPropsEmits(props, emits)
+const forwarded = useForwardPropsEmits(props, emits) as any
 </script>
 
 <template>
-  <DrawerRoot v-bind="{ forwarded }">
+  <DrawerRoot v-bind="forwarded">
     <slot />
   </DrawerRoot>
 </template>

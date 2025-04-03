@@ -6,4 +6,5 @@ export interface Product {
   image: string
   description: string
   available: boolean
+  sweetness?: 100 | 75 | 50 | 25 | 0
 }

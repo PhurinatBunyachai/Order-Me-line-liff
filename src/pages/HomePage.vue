@@ -17,18 +17,24 @@ import { useNotion } from '@/composables/useNotion'
 
 const productStore = useProductStore()
 const { products } = storeToRefs(productStore)
-const { initNotion, updateDatabase } = useNotion()
+const { initNotion } = useNotion()
 
 onMounted(async () => {
   await initNotion()
-  await updateDatabase()
 })
 
-let isOpen = ref<boolean>(false)
-const onAddToCart = (product: Product) => {
+const isOpen = ref<boolean>(false)
+const productSelect = ref<Product>()
+let carts = ref([])
+
+const onSelectProduct = (product: Product) => {
   isOpen.value = !isOpen.value
-  console.log(product)
-  console.log(isOpen.value)
+  productSelect.value = product
+}
+
+const onAddToCart = () => {
+  isOpen.value = false
+  carts.value = []
 }
 </script>
 
@@ -40,19 +46,24 @@ const onAddToCart = (product: Product) => {
         v-for="product in products"
         :product="product"
         :key="product.id"
-        @click="onAddToCart(product)"
+        @click="onSelectProduct(product)"
       />
     </div>
-
+    <div class="absolute bottom-0">Cart Summary</div>
     <Drawer :open="isOpen">
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>This action cannot be undone.</DrawerDescription>
+          <DrawerTitle>{{ productSelect?.name }}</DrawerTitle>
+          <DrawerDescription>เราใช้เมล็ดคั่วกลางทุกแก้ว</DrawerDescription>
         </DrawerHeader>
-        <div class="m-h-[200px]">dasadsadsadsads</div>
+        <div class="m-h-[500px]">
+          <div class="flex">
+            <span>Sweetness</span>
+          </div>
+        </div>
         <DrawerFooter>
-          <Button>Submit</Button>
+          <Button @click="onAddToCart">Add To Cart ฿{{ productSelect?.price }}</Button>
+          <Button @click="isOpen = !isOpen" variant="outline">Cancel</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
