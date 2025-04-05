@@ -31,9 +31,13 @@ const profileStore = useProfileStore()
 const { products } = storeToRefs(productStore)
 const { profile, profileAddress } = storeToRefs(profileStore)
 const { initNotion, updateDatabase } = useNotion()
-
+// const storeDatabaseId = import.meta.env.APP_NOTION_STORE_INFO_DATABASE_ID
 onMounted(async () => {
   await initNotion()
+  // const test = await getDatabase(storeDatabaseId, {
+  //   page_size: 1
+  // })
+  // console.log(test.results[0].properties.status.status.name)
 })
 
 const isOpenProduct = ref<boolean>(false)

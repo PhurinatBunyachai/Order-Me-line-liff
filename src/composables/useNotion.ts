@@ -20,7 +20,7 @@ interface NotionPage {
 }
 
 const token = import.meta.env.APP_NOTION_API_KEY
-const databaseId = import.meta.env.APP_NOTION_DATABASE_ID
+const orderDatabaseId = import.meta.env.APP_NOTION_DATABASE_ID
 
 export const useNotion = () => {
   const client = ref<Client | null>(null)
@@ -39,19 +39,23 @@ export const useNotion = () => {
     }
   }
 
-  const getDatabase = async (): Promise<NotionPage | null> => {
+  const getDatabase = async (
+    databaseId: string,
+    query: Record<string, unknown>
+  ): Promise<NotionPage | null> => {
     if (!client.value) {
       throw new Error('Notion client not initialized')
     }
     isLoading.value = true
     try {
-      const response = await fetch(`/api/notion/databases/${databaseId}`, {
-        method: 'GET',
+      const response = await fetch(`/api/notion/databases/${databaseId}/query`, {
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
           'Notion-Version': '2022-06-28',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify(query)
       }).then((res) => res.json())
       return response as NotionPage
     } catch (err) {
@@ -82,7 +86,7 @@ export const useNotion = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          parent: { database_id: databaseId },
+          parent: { database_id: orderDatabaseId },
           properties: {
             'Order Name': {
               title: [
