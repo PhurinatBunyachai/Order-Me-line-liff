@@ -42,10 +42,6 @@ let level = ref()
 let note = ref('')
 
 const onSelectProduct = (product: Product) => {
-  if (isOpenProduct.value) {
-    isOpenProduct.value = false
-  }
-
   isOpenProduct.value = !isOpenProduct.value
   productSelect.value = product
 }
@@ -100,11 +96,11 @@ const onReset = () => {
         @click="isOpenCart = true"
       >
         <!-- <ShoppingCart class="mr-2 h-5 w-5" /> -->
-        <span>My Cart ({{ totalPrice }} THB)</span>{{ isOpenProduct }}
+        <span>My Cart ({{ totalPrice }} THB)</span>
       </div>
     </div>
 
-    <Drawer :open="isOpenProduct">
+    <Drawer v-model:open="isOpenProduct">
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>{{ productSelect?.name }}</DrawerTitle>
@@ -142,7 +138,7 @@ const onReset = () => {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-    <Drawer :open="isOpenCart">
+    <Drawer v-model:open="isOpenCart">
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>My Cart</DrawerTitle>
