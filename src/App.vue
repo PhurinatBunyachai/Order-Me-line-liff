@@ -2,10 +2,20 @@
 import { onMounted } from 'vue'
 import { Header } from '@/components/herder'
 import { useLiff } from '@/composables/useLiff'
+import { useProfileStore } from '@/stores/profile'
 
 const { getProfile, profile } = useLiff()
+const profileStore = useProfileStore()
+
 onMounted(async () => {
   await getProfile()
+
+  await profileStore.updateProfile({
+    userId: profile.value.userId,
+    displayName: profile.value.displayName,
+    pictureUrl: profile.value.pictureUrl,
+    statusMessage: profile.value.statusMessage
+  })
 })
 </script>
 

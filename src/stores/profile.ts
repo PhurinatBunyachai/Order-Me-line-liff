@@ -1,26 +1,32 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
-interface UserProfile {
-  building?: string
-  roomId?: string
-  tel?: string
-}
+import type { Profile, ProfileAddress } from '@/types'
 
 export const useProfileStore = defineStore(
   'profile',
   () => {
-    const profile = ref<UserProfile>({
+    const profile = ref<Profile>({
+      userId: '',
+      displayName: '',
+      pictureUrl: '',
+      statusMessage: ''
+    })
+
+    const profileAddress = ref<ProfileAddress>({
       building: '',
       roomId: '',
       tel: ''
     })
 
-    const updateProfile = (newProfile: UserProfile) => {
-      profile.value = { ...profile.value, ...newProfile }
+    const updateProfileAddress = (newProfile: ProfileAddress) => {
+      profileAddress.value = { ...newProfile }
     }
 
-    return { profile, updateProfile }
+    const updateProfile = (newProfile: Profile) => {
+      profile.value = { ...newProfile }
+    }
+
+    return { profile, updateProfile, updateProfileAddress }
   },
   {
     persist: true
