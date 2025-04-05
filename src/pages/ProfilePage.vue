@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -8,16 +7,12 @@ import { useProfileStore } from '@/stores/profile'
 const profileStore = useProfileStore()
 const { profile, profileAddress } = storeToRefs(profileStore)
 
-const building = ref('')
-const roomId = ref('')
-const tel = ref('')
-
 const saveProfile = () => {
   // Update the profile store with the new values
   profileStore.updateProfileAddress({
-    building: building.value,
-    roomId: roomId.value,
-    tel: tel.value
+    building: profileAddress.value.building,
+    roomId: profileAddress.value.roomId,
+    tel: profileAddress.value.tel
   })
 
   // Show success message or redirect
@@ -71,6 +66,7 @@ const saveProfile = () => {
       </div>
 
       <Button @click="saveProfile" class="mt-4 w-full">Save Profile</Button>
+      <Button @click="$router.push('/')" class="mt-4 w-full" variant="outline">Back to Home</Button>
     </div>
   </div>
 </template>
