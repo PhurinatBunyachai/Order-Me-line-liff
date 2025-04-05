@@ -23,10 +23,13 @@ import { Input } from '@/components/ui/input'
 import { ProductCard } from '@/components/product'
 import type { Product, ProductCart } from '@/types'
 import { useProductStore } from '@/stores/product'
+import { useProfileStore } from '@/stores/profile'
 import { useNotion } from '@/composables/useNotion'
 
 const productStore = useProductStore()
+const profileStore = useProfileStore()
 const { products } = storeToRefs(productStore)
+const { profile, profileAddress } = storeToRefs(profileStore)
 const { initNotion, updateDatabase } = useNotion()
 
 onMounted(async () => {
@@ -60,7 +63,7 @@ const onSubmit = async () => {
     return
   }
   for (let cart of carts.value) {
-    await updateDatabase(cart)
+    await updateDatabase(cart, profile.value, profileAddress.value)
   }
   carts.value = []
   isOpenCart.value = false

@@ -1,6 +1,6 @@
 import { Client } from '@notionhq/client'
 import { ref } from 'vue'
-import type { ProductCart } from '@/types'
+import type { ProductCart, Profile, ProfileAddress } from '@/types'
 type NotionProperty = {
   title?: { plain_text: string }[]
   rich_text?: { plain_text: string }[]
@@ -63,7 +63,11 @@ export const useNotion = () => {
     }
   }
 
-  const updateDatabase = async (cart: ProductCart): Promise<NotionPage | null> => {
+  const updateDatabase = async (
+    cart: ProductCart,
+    profile: Profile,
+    profileAdress: ProfileAddress
+  ): Promise<NotionPage | null> => {
     if (!client.value) {
       throw new Error('Notion client not initialized')
     }
@@ -96,7 +100,7 @@ export const useNotion = () => {
               rich_text: [
                 {
                   text: {
-                    content: 'wait'
+                    content: profile.userId
                   }
                 }
               ]
@@ -114,7 +118,7 @@ export const useNotion = () => {
               rich_text: [
                 {
                   text: {
-                    content: 'wait'
+                    content: profileAdress.building
                   }
                 }
               ]
@@ -123,7 +127,7 @@ export const useNotion = () => {
               rich_text: [
                 {
                   text: {
-                    content: 'wait'
+                    content: profileAdress.roomId
                   }
                 }
               ]
@@ -132,7 +136,7 @@ export const useNotion = () => {
               rich_text: [
                 {
                   text: {
-                    content: 'wait'
+                    content: profileAdress.tel
                   }
                 }
               ]
