@@ -33,7 +33,7 @@ const isAvatarMenuOpen = ref<boolean>(false)
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>Your Profile</DropdownMenuItem>
+            <DropdownMenuItem @click="$router.push('/profile')">Your Profile</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

@@ -3,4 +3,7 @@ export interface Profile {
   displayName: string | ''
   pictureUrl: string | ''
   statusMessage: string | ''
+  building?: string
+  roomId?: string
+  tel?: string
 }
