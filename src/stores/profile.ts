@@ -26,7 +26,7 @@ export const useProfileStore = defineStore(
       profile.value = { ...newProfile }
     }
 
-    return { profile, updateProfile, updateProfileAddress }
+    return { profile, profileAddress, updateProfile, updateProfileAddress }
   },
   {
     persist: true
