@@ -42,12 +42,15 @@ let level = ref()
 let note = ref('')
 
 const onSelectProduct = (product: Product) => {
+  if (isOpenProduct.value) {
+    isOpenProduct.value = false
+  }
+
   isOpenProduct.value = !isOpenProduct.value
   productSelect.value = product
 }
 
 const onAddToCart = () => {
-  isOpenProduct.value = false
   if (productSelect.value) {
     carts.value = [
       ...carts.value,
@@ -96,8 +99,8 @@ const onReset = () => {
         class="fixed bottom-0 left-0 right-0 flex cursor-pointer items-center justify-center rounded-t-lg bg-primary p-4 text-primary-foreground shadow-lg transition-colors hover:bg-primary/90"
         @click="isOpenCart = true"
       >
-        <ShoppingCart class="mr-2 h-5 w-5" />
-        <span>My Cart ({{ totalPrice }} THB)</span>
+        <!-- <ShoppingCart class="mr-2 h-5 w-5" /> -->
+        <span>My Cart ({{ totalPrice }} THB)</span>{{ isOpenProduct }}
       </div>
     </div>
 
