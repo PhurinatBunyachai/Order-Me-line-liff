@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, h } from 'vue'
 import { storeToRefs } from 'pinia'
 import {
   Drawer,
@@ -26,6 +26,9 @@ import { useProductStore } from '@/stores/product'
 import { useProfileStore } from '@/stores/profile'
 import { useNotion } from '@/composables/useNotion'
 import { Loader2 } from 'lucide-vue-next'
+import { useToast } from '@/components/ui/toast/use-toast'
+import { ToastAction } from '@/components/ui/toast'
+const { toast } = useToast()
 const productStore = useProductStore()
 const profileStore = useProfileStore()
 const { products } = storeToRefs(productStore)
@@ -74,7 +77,22 @@ const onSubmit = async () => {
 
   const isHasProfilAddress = await onCheckProfileAddress()
   if (!isHasProfilAddress) {
-    alert('Please fill your profile address')
+    toast({
+      title: 'Please fill your address',
+      description: 'Please fill in your delivery address before placing an order.',
+      action: h(
+        ToastAction,
+        {
+          altText: 'Go to profile',
+          onClick: () => {
+            window.location.href = '/profile'
+          }
+        },
+        {
+          default: () => 'Go to profile'
+        }
+      )
+    })
     return
   }
 

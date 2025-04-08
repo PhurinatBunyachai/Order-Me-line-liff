@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import { Header } from '@/components/herder'
 import { useLiff } from '@/composables/useLiff'
 import { useProfileStore } from '@/stores/profile'
-
+import {Toaster} from '@/components/ui/toast'
 const { getProfile, profile } = useLiff()
 const profileStore = useProfileStore()
 
@@ -20,6 +20,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <Toaster />
   <Header title="Sketchy" :profile="profile" />
   <div class="container mx-auto flex h-screen max-w-[1280px] justify-center">
     <router-view v-slot="{ Component }">
