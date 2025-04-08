@@ -30,10 +30,11 @@ const productStore = useProductStore()
 const profileStore = useProfileStore()
 const { products } = storeToRefs(productStore)
 const { profile, profileAddress } = storeToRefs(profileStore)
-const { initNotion, updateDatabase, storeDatabaseId, getDatabase } = useNotion()
+const { initNotion, updateDatabase, storeDatabaseId, getDatabase, productDatabaseId } = useNotion()
 
 onMounted(async () => {
   await initNotion()
+  await onGetMenu()
 })
 
 const isOpenProduct = ref<boolean>(false)
@@ -90,6 +91,10 @@ const onCheckStore = async (): Promise<boolean> => {
     page_size: 1
   })
   return response?.results[0].properties.status.status.name.toLowerCase() === 'open'
+}
+const onGetMenu = async () => {
+  const response = await getDatabase(productDatabaseId, {})
+  console.log(response?.results)
 }
 </script>
 
