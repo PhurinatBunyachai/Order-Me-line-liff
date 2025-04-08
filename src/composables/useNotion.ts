@@ -6,7 +6,7 @@ const token = import.meta.env.APP_NOTION_API_KEY
 const orderDatabaseId = import.meta.env.APP_NOTION_DATABASE_ID
 const storeDatabaseId = import.meta.env.APP_NOTION_STORE_INFO_DATABASE_ID
 const productDatabaseId = import.meta.env.APP_NOTION_PRODUCT_DATABASE_ID
-const apiBaseUrl = import.meta.env.PROD ? 'https://api.notion.com/v1' : '/api/notion'
+const apiBaseUrl = import.meta.env.PROD ? '/api/notion' : '/api/notion'
 
 export const useNotion = () => {
   const client = ref<Client | null>(null)
