@@ -114,7 +114,14 @@ const onCheckProfileAddress = () => {
   return false
 }
 const onGetMenu = async () => {
-  const response = await getDatabase(productDatabaseId, {})
+  const response = await getDatabase(productDatabaseId, {
+    sorts: [
+      {
+        property: 'id',
+        direction: 'ascending'
+      }
+    ]
+  })
   const productResult = response?.results.map((result) => ({
     id: result.properties.id.unique_id.number,
     name: result.properties.name.rich_text[0].plain_text,
