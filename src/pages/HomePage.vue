@@ -94,14 +94,15 @@ const onCheckStore = async (): Promise<boolean> => {
 }
 const onGetMenu = async () => {
   const response = await getDatabase(productDatabaseId, {})
-  const products = response?.results.map((result) => ({
-    available: result.properties.available.status.name,
+  const productResult = response?.results.map((result) => ({
     id: result.properties.id.unique_id.number,
     name: result.properties.name.rich_text[0].plain_text,
     price: result.properties.price.number,
-    image: result.properties.image.files[0]?.file.url
+    image: result.properties.image.files[0]?.file.url,
+    description: result.properties.description.rich_text[0].plain_text,
+    available: result.properties.available.status.name.toLowerCase() === 'open'
   }))
-  console.log(products)
+  products.value = productResult as Product[]
 }
 </script>
 

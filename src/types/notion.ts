@@ -49,7 +49,7 @@ export interface Properties {
 export interface NumberProperty {
   id: string
   type: 'number'
-  number: number | null
+  number: number
 }
 
 export interface FileProperty {
