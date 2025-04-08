@@ -71,6 +71,13 @@ const onSubmit = async () => {
   if (!carts.value.length) {
     return
   }
+
+  const isHasProfilAddress = await onCheckProfileAddress()
+  if (!isHasProfilAddress) {
+    alert('Please fill your profile address')
+    return
+  }
+
   const isOpen = await onCheckStore()
   if (!isOpen) {
     alert('Store is closed')
@@ -99,6 +106,12 @@ const onCheckStore = async (): Promise<boolean> => {
     page_size: 1
   })
   return response?.results[0].properties.status.status.name.toLowerCase() === 'open'
+}
+const onCheckProfileAddress = () => {
+  if (profileAddress.value.building && profileAddress.value.roomId && profileAddress.value.tel) {
+    return true
+  }
+  return false
 }
 const onGetMenu = async () => {
   const response = await getDatabase(productDatabaseId, {})
