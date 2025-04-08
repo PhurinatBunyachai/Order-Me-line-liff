@@ -40,7 +40,8 @@ const {
   getDatabase,
   productDatabaseId,
   isLoading,
-  isProcess
+  isProcess,
+  error
 } = useNotion()
 
 onMounted(async () => {
@@ -155,6 +156,7 @@ const onGetMenu = async () => {
 <template>
   <div>
     <h1 class="mb-2 mt-2 w-full text-center">Menu</h1>
+    {{ error }}
     <div class="grid w-full grid-cols-2 gap-2 px-2">
       <template v-if="isLoading">
         <div
