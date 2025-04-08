@@ -11,7 +11,15 @@ const totalQuantity = computed(() => {
 </script>
 
 <template>
-  <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+  <div
+    class="rounded-lg border bg-card text-card-foreground shadow-sm"
+    :class="{ 'pointer-events-none opacity-50': !product.available }"
+  >
+    <div v-if="!product.available" class="relative z-10">
+      <div class="absolute right-10 top-[4.2rem]">
+        <span class="rounded-full bg-gray-500 px-3 py-1 text-sm text-white"> Out of Stock </span>
+      </div>
+    </div>
     <div class="relative aspect-video h-20 w-full overflow-hidden rounded-t-lg">
       <img :src="product.image" :alt="product.name" class="h-full w-full object-cover" />
       <span
