@@ -25,7 +25,7 @@ import type { Product, ProductCart } from '@/types'
 import { useProductStore } from '@/stores/product'
 import { useProfileStore } from '@/stores/profile'
 import { useNotion } from '@/composables/useNotion'
-
+import { Loader2 } from 'lucide-vue-next'
 const productStore = useProductStore()
 const profileStore = useProfileStore()
 const { products } = storeToRefs(productStore)
@@ -216,8 +216,14 @@ const onGetMenu = async () => {
           </div>
         </div>
         <DrawerFooter>
-          <Button :disabled="!totalPrice || isProcess" @click="onSubmit">Submit Order</Button>
-          <Button :disabled="isProcess" @click="isOpenCart = false" variant="outline">Close</Button>
+          <Button :disabled="!totalPrice || isProcess" @click="onSubmit">
+            <Loader2 v-if="isProcess" class="mr-2 h-4 w-4 animate-spin" />
+            Submit Order
+          </Button>
+          <Button :disabled="isProcess" @click="isOpenCart = false" variant="outline">
+            <Loader2 v-if="isProcess" class="mr-2 h-4 w-4 animate-spin" />
+            Close
+          </Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
