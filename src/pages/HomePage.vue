@@ -30,14 +30,10 @@ const productStore = useProductStore()
 const profileStore = useProfileStore()
 const { products } = storeToRefs(productStore)
 const { profile, profileAddress } = storeToRefs(profileStore)
-const { initNotion, updateDatabase } = useNotion()
+const { initNotion, updateDatabase, storeDatabaseId, getDatabase } = useNotion()
 
 onMounted(async () => {
   await initNotion()
-  // const test = await getDatabase(storeDatabaseId, {
-  //   page_size: 1
-  // })
-  // console.log(test.results[0].properties.status.status.name)
 })
 
 const isOpenProduct = ref<boolean>(false)
@@ -66,6 +62,11 @@ const onSubmit = async () => {
   if (!carts.value.length) {
     return
   }
+  const isOpen = await onCheckStore()
+  if (!isOpen) {
+    alert('Store is closed')
+    return
+  }
   for (let cart of carts.value) {
     await updateDatabase(cart, profile.value, profileAddress.value)
   }
@@ -76,11 +77,19 @@ const onSubmit = async () => {
 const onRemoveFromCart = (index: number) => {
   carts.value.splice(index, 1)
 }
+
 const onReset = () => {
   isOpenProduct.value = false
   productSelect.value = undefined
   level.value = undefined
   note.value = ''
+}
+
+const onCheckStore = async (): Promise<boolean> => {
+  const response = await getDatabase(storeDatabaseId, {
+    page_size: 1
+  })
+  return response?.results[0].properties.status.status.name.toLowerCase() === 'open'
 }
 </script>
 

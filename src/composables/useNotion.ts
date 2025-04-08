@@ -1,28 +1,11 @@
 import { Client } from '@notionhq/client'
 import { ref } from 'vue'
-import type { ProductCart, Profile, ProfileAddress } from '@/types'
-type NotionProperty = {
-  title?: { plain_text: string }[]
-  rich_text?: { plain_text: string }[]
-  number?: number
-  select?: { name: string }
-  multi_select?: { name: string }[]
-  date?: { start: string }
-  checkbox?: boolean
-  email?: string
-  phone_number?: string
-  url?: string
-}
-
-interface NotionPage {
-  id: string
-  properties: Record<string, NotionProperty>
-}
+import type { ProductCart, Profile, ProfileAddress, NotionResponse } from '@/types'
 
 const token = import.meta.env.APP_NOTION_API_KEY
 const orderDatabaseId = import.meta.env.APP_NOTION_DATABASE_ID
-// const storeDatabaseId = import.meta.env.APP_NOTION_STORE_INFO_DATABASE_ID
-// const productDatabaseId = import.meta.env.APP_NOTION_PRODUCT_DATABASE_ID
+const storeDatabaseId = import.meta.env.APP_NOTION_STORE_INFO_DATABASE_ID
+const productDatabaseId = import.meta.env.APP_NOTION_PRODUCT_DATABASE_ID
 
 export const useNotion = () => {
   const client = ref<Client | null>(null)
@@ -44,7 +27,7 @@ export const useNotion = () => {
   const getDatabase = async (
     databaseId: string,
     query: Record<string, unknown>
-  ): Promise<NotionPage | null> => {
+  ): Promise<NotionResponse | null> => {
     if (!client.value) {
       throw new Error('Notion client not initialized')
     }
@@ -59,7 +42,7 @@ export const useNotion = () => {
         },
         body: JSON.stringify(query)
       }).then((res) => res.json())
-      return response as NotionPage
+      return response
     } catch (err) {
       error.value = err as Error
       console.error('Failed to get Notion page:', err)
@@ -73,7 +56,7 @@ export const useNotion = () => {
     cart: ProductCart,
     profile: Profile,
     profileAdress: ProfileAddress
-  ): Promise<NotionPage | null> => {
+  ): Promise<NotionResponse | null> => {
     if (!client.value) {
       throw new Error('Notion client not initialized')
     }
@@ -155,7 +138,7 @@ export const useNotion = () => {
           }
         })
       }).then((res) => res.json())
-      return response as NotionPage
+      return response as NotionResponse
     } catch (err) {
       error.value = err as Error
       console.error('Failed to update Notion page:', err)
@@ -171,6 +154,9 @@ export const useNotion = () => {
     isLoading,
     initNotion,
     getDatabase,
-    updateDatabase
+    updateDatabase,
+    storeDatabaseId,
+    productDatabaseId,
+    orderDatabaseId
   }
 }
