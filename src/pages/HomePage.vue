@@ -30,8 +30,15 @@ const productStore = useProductStore()
 const profileStore = useProfileStore()
 const { products } = storeToRefs(productStore)
 const { profile, profileAddress } = storeToRefs(profileStore)
-const { initNotion, updateDatabase, storeDatabaseId, getDatabase, productDatabaseId, isLoading } =
-  useNotion()
+const {
+  initNotion,
+  updateDatabase,
+  storeDatabaseId,
+  getDatabase,
+  productDatabaseId,
+  isLoading,
+  isProcess
+} = useNotion()
 
 onMounted(async () => {
   await initNotion()
@@ -197,14 +204,20 @@ const onGetMenu = async () => {
               </div>
               <div class="flex items-center gap-2">
                 <span class="font-bold">{{ cart.price }} THB</span>
-                <Button variant="outline" size="sm" @click="onRemoveFromCart(index)">Remove</Button>
+                <Button
+                  :disabled="isProcess"
+                  variant="outline"
+                  size="sm"
+                  @click="onRemoveFromCart(index)"
+                  >Remove</Button
+                >
               </div>
             </div>
           </div>
         </div>
         <DrawerFooter>
-          <Button :disabled="!totalPrice" @click="onSubmit">Submit Order</Button>
-          <Button @click="isOpenCart = false" variant="outline">Close</Button>
+          <Button :disabled="!totalPrice || isProcess" @click="onSubmit">Submit Order</Button>
+          <Button :disabled="isProcess" @click="isOpenCart = false" variant="outline">Close</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

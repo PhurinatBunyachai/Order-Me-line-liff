@@ -12,7 +12,7 @@ const totalQuantity = computed(() => {
 
 <template>
   <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-    <div class="relative h-20 w-full overflow-hidden rounded-t-lg">
+    <div class="relative aspect-video h-20 w-full overflow-hidden rounded-t-lg">
       <img :src="product.image" :alt="product.name" class="h-full w-full object-cover" />
       <span
         v-if="totalQuantity"

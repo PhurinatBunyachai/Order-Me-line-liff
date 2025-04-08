@@ -11,6 +11,7 @@ export const useNotion = () => {
   const client = ref<Client | null>(null)
   const error = ref<Error | null>(null)
   const isLoading = ref(false)
+  const isProcess = ref(false)
 
   const initNotion = () => {
     try {
@@ -61,7 +62,7 @@ export const useNotion = () => {
       throw new Error('Notion client not initialized')
     }
 
-    isLoading.value = true
+    isProcess.value = true
     try {
       const response = await fetch(`/api/notion/pages/`, {
         method: 'POST',
@@ -144,7 +145,7 @@ export const useNotion = () => {
       console.error('Failed to update Notion page:', err)
       return null
     } finally {
-      isLoading.value = false
+      isProcess.value = false
     }
   }
 
@@ -152,6 +153,7 @@ export const useNotion = () => {
     client,
     error,
     isLoading,
+    isProcess,
     initNotion,
     getDatabase,
     updateDatabase,
