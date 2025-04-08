@@ -188,7 +188,7 @@ const onGetMenu = async () => {
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>{{ productSelect?.name }}</DrawerTitle>
-          <DrawerDescription>เราใช้เมล็ดคั่วกลางทุกแก้ว</DrawerDescription>
+          <DrawerDescription>{{ productSelect?.description }}</DrawerDescription>
         </DrawerHeader>
         <div class="m-h-[500px] px-4">
           <div class="flex flex-col">
