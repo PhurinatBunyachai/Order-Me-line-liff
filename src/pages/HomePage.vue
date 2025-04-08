@@ -94,7 +94,14 @@ const onCheckStore = async (): Promise<boolean> => {
 }
 const onGetMenu = async () => {
   const response = await getDatabase(productDatabaseId, {})
-  console.log(response?.results)
+  const products = response?.results.map((result) => ({
+    available: result.properties.available.status.name,
+    id: result.properties.id.unique_id.number,
+    name: result.properties.name.rich_text[0].plain_text,
+    price: result.properties.price.number,
+    image: result.properties.image.files[0]?.file.url
+  }))
+  console.log(products)
 }
 </script>
 

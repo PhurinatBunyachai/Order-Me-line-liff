@@ -32,15 +32,41 @@ export interface Parent {
 }
 
 export interface Properties {
+  // store DB
   status: StatusProperty
   close_time: RichTextProperty
   open_time: TitleProperty
+
+  //Product DB
+  id: UniqueIDProperty
+  name: RichTextProperty
+  price: NumberProperty
+  description: RichTextProperty
+  image: FileProperty
+  available: StatusProperty
+}
+
+export interface NumberProperty {
+  id: string
+  type: 'number'
+  number: number | null
+}
+
+export interface FileProperty {
+  id: string
+  type: 'files'
+  files: File[]
 }
 
 export interface StatusProperty {
   id: string
   type: 'status'
   status: Status
+}
+export interface UniqueIDProperty {
+  id: string
+  type: 'unique_id'
+  unique_id: uniqueID
 }
 
 export interface Status {
@@ -74,6 +100,11 @@ export interface TextContent {
   link: string | null
 }
 
+export interface FileContent {
+  expiry_time: string | ''
+  url: string | ''
+}
+
 export interface Annotations {
   bold: boolean
   italic: boolean
@@ -81,4 +112,16 @@ export interface Annotations {
   underline: boolean
   code: boolean
   color: string
+}
+
+export interface File {
+  type: string
+  file: FileContent
+  annotations: Annotations
+  plain_text: string
+  href: string | null
+}
+export interface uniqueID {
+  number: number
+  prefix: string | null
 }
