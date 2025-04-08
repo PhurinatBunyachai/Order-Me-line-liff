@@ -6,6 +6,7 @@ const token = import.meta.env.APP_NOTION_API_KEY
 const orderDatabaseId = import.meta.env.APP_NOTION_DATABASE_ID
 const storeDatabaseId = import.meta.env.APP_NOTION_STORE_INFO_DATABASE_ID
 const productDatabaseId = import.meta.env.APP_NOTION_PRODUCT_DATABASE_ID
+const apiBaseUrl = import.meta.env.PROD ? 'https://api.notion.com/v1' : '/api/notion'
 
 export const useNotion = () => {
   const client = ref<Client | null>(null)
@@ -32,9 +33,10 @@ export const useNotion = () => {
     if (!client.value) {
       throw new Error('Notion client not initialized')
     }
+
     isLoading.value = true
     try {
-      const response = await fetch(`/api/notion/databases/${databaseId}/query`, {
+      const response = await fetch(`${apiBaseUrl}/databases/${databaseId}/query`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -64,7 +66,7 @@ export const useNotion = () => {
 
     isProcess.value = true
     try {
-      const response = await fetch(`/api/notion/pages/`, {
+      const response = await fetch(`${apiBaseUrl}/pages/`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
