@@ -30,7 +30,8 @@ const productStore = useProductStore()
 const profileStore = useProfileStore()
 const { products } = storeToRefs(productStore)
 const { profile, profileAddress } = storeToRefs(profileStore)
-const { initNotion, updateDatabase, storeDatabaseId, getDatabase, productDatabaseId } = useNotion()
+const { initNotion, updateDatabase, storeDatabaseId, getDatabase, productDatabaseId, isLoading } =
+  useNotion()
 
 onMounted(async () => {
   await initNotion()
@@ -110,13 +111,22 @@ const onGetMenu = async () => {
   <div>
     <h1 class="mb-2 mt-2 w-full text-center">Menu</h1>
     <div class="grid w-full grid-cols-2 gap-2 px-2">
-      <ProductCard
-        v-for="product in products"
-        :product="product"
-        :carts="carts"
-        :key="product.id"
-        @click="onSelectProduct(product)"
-      />
+      <template v-if="isLoading">
+        <div
+          v-for="n in 8"
+          :key="n"
+          class="h-[180px] w-[180px] animate-pulse rounded-lg bg-gray-200"
+        ></div>
+      </template>
+      <template v-else>
+        <ProductCard
+          v-for="product in products"
+          :product="product"
+          :carts="carts"
+          :key="product.id"
+          @click="onSelectProduct(product)"
+        />
+      </template>
     </div>
 
     <div class="absolute bottom-0 min-w-full">
