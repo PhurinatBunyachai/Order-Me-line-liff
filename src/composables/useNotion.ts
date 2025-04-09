@@ -41,7 +41,8 @@ export const useNotion = () => {
         headers: {
           Authorization: `Bearer ${token}`,
           'Notion-Version': '2022-06-28',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
         },
         body: JSON.stringify(query)
       }).then((res) => res.json())
@@ -71,7 +72,8 @@ export const useNotion = () => {
         headers: {
           Authorization: `Bearer ${token}`,
           'Notion-Version': '2022-06-28',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
         },
         body: JSON.stringify({
           parent: { database_id: orderDatabaseId },
