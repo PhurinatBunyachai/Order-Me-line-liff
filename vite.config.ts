@@ -17,7 +17,6 @@ export default defineConfig({
       '/api/notion': {
         target: 'https://api.notion.com/v1',
         changeOrigin: true,
-        ws: true,
         rewrite: (path) => path.replace(/^\/api\/notion/, '')
       }
     }
