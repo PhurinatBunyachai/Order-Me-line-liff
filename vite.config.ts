@@ -19,6 +19,12 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/notion/, '')
       }
+    },
+    cors: {
+      origin: 'https://api.notion.com',
+      methods: ['GET', 'POST'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+      preflightContinue: true
     }
   },
   envPrefix: 'APP_',
