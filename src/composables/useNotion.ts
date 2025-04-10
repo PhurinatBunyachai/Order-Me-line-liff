@@ -67,7 +67,7 @@ export const useNotion = () => {
 
     isProcess.value = true
     try {
-      const response = await fetch(`${apiBaseUrl}/pages/`, {
+      const response = await fetch(`${apiBaseUrl}/notion/page`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -76,68 +76,70 @@ export const useNotion = () => {
           'Access-Control-Allow-Origin': '*'
         },
         body: JSON.stringify({
-          parent: { database_id: orderDatabaseId },
-          properties: {
-            'Order Name': {
-              title: [
-                {
-                  text: {
-                    content: cart.name
+          pageObj: {
+            parent: { type: 'database_id', database_id: orderDatabaseId },
+            properties: {
+              'Order Name': {
+                title: [
+                  {
+                    text: {
+                      content: cart.name
+                    }
                   }
-                }
-              ]
-            },
-            Sweetness: {
-              number: cart.sweetness
-            },
-            'User ID': {
-              rich_text: [
-                {
-                  text: {
-                    content: profile.userId
+                ]
+              },
+              Sweetness: {
+                number: cart.sweetness
+              },
+              'User ID': {
+                rich_text: [
+                  {
+                    text: {
+                      content: profile.userId
+                    }
                   }
-                }
-              ]
-            },
-            Note: {
-              rich_text: [
-                {
-                  text: {
-                    content: cart.note
+                ]
+              },
+              Note: {
+                rich_text: [
+                  {
+                    text: {
+                      content: cart.note
+                    }
                   }
-                }
-              ]
-            },
-            Buliding: {
-              rich_text: [
-                {
-                  text: {
-                    content: profileAdress.building
+                ]
+              },
+              Buliding: {
+                rich_text: [
+                  {
+                    text: {
+                      content: profileAdress.building
+                    }
                   }
-                }
-              ]
-            },
-            'Room ID': {
-              rich_text: [
-                {
-                  text: {
-                    content: profileAdress.roomId
+                ]
+              },
+              'Room ID': {
+                rich_text: [
+                  {
+                    text: {
+                      content: profileAdress.roomId
+                    }
                   }
-                }
-              ]
-            },
-            Tel: {
-              rich_text: [
-                {
-                  text: {
-                    content: profileAdress.tel
+                ]
+              },
+              Tel: {
+                rich_text: [
+                  {
+                    text: {
+                      content: profileAdress.tel
+                    }
                   }
+                ]
+              },
+              'Order Date': {
+                date: {
+                  start: new Date().toISOString()
                 }
-              ]
-            },
-            'Order Date': {
-              date: {
-                start: new Date().toISOString()
               }
             }
           }
