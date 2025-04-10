@@ -33,7 +33,7 @@ const productStore = useProductStore()
 const profileStore = useProfileStore()
 const { products } = storeToRefs(productStore)
 const { profile, profileAddress } = storeToRefs(profileStore)
-const { initNotion, updateDatabase, getDatabase, isLoading, isProcess, error } = useNotion()
+const { initNotion, updateDatabase, getDatabase, isLoading, isProcess } = useNotion()
 
 onMounted(async () => {
   await initNotion()
@@ -147,7 +147,6 @@ const onGetMenu = async () => {
 <template>
   <div>
     <h1 class="mb-2 mt-2 w-full text-center">Menu</h1>
-    {{ error }}
     <div class="grid w-full grid-cols-2 gap-2 px-2">
       <template v-if="isLoading">
         <div
