@@ -26,7 +26,10 @@ export const useNotion = () => {
     }
   }
 
-  const getDatabase = async (query: Record<string, unknown>): Promise<NotionResponse | null> => {
+  const getDatabase = async (
+    type: string,
+    query: Record<string, unknown>
+  ): Promise<NotionResponse | null> => {
     if (!client.value) {
       throw new Error('Notion client not initialized')
     }
@@ -41,7 +44,7 @@ export const useNotion = () => {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         },
-        body: JSON.stringify({ type: 'product', query: { ...query } })
+        body: JSON.stringify({ type: type, query: { ...query } })
       }).then((res) => res.json())
       return response
     } catch (err) {
