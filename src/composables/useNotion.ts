@@ -35,6 +35,7 @@ export const useNotion = () => {
     }
 
     isLoading.value = true
+    const filter = { filter: { ...query } }
     try {
       const response = await fetch(`${apiBaseUrl}/databases/${databaseId}/query`, {
         method: 'POST',
@@ -44,7 +45,7 @@ export const useNotion = () => {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         },
-        body: JSON.stringify(query)
+        body: JSON.stringify(filter)
       }).then((res) => res.json())
       return response
     } catch (err) {
