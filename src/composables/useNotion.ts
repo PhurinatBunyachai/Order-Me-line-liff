@@ -6,7 +6,7 @@ const token = import.meta.env.APP_NOTION_API_KEY
 const orderDatabaseId = import.meta.env.APP_NOTION_DATABASE_ID
 const storeDatabaseId = import.meta.env.APP_NOTION_STORE_INFO_DATABASE_ID
 const productDatabaseId = import.meta.env.APP_NOTION_PRODUCT_DATABASE_ID
-const apiBaseUrl = import.meta.env.PROD ? '/api/notion' : '/api/notion'
+const apiBaseUrl = import.meta.env.APP_BACKEND_PORT
 
 export const useNotion = () => {
   const client = ref<Client | null>(null)
@@ -26,17 +26,14 @@ export const useNotion = () => {
     }
   }
 
-  const getDatabase = async (
-    databaseId: string,
-    query: Record<string, unknown>
-  ): Promise<NotionResponse | null> => {
+  const getDatabase = async (query: Record<string, unknown>): Promise<NotionResponse | null> => {
     if (!client.value) {
       throw new Error('Notion client not initialized')
     }
 
     isLoading.value = true
     try {
-      const response = await fetch(`${apiBaseUrl}/databases/${databaseId}/query`, {
+      const response = await fetch(`${apiBaseUrl}/notion/database`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -44,7 +41,7 @@ export const useNotion = () => {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         },
-        body: JSON.stringify({ ...query })
+        body: JSON.stringify({ type: 'product', query: { ...query } })
       }).then((res) => res.json())
       return response
     } catch (err) {
