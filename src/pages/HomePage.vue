@@ -112,7 +112,7 @@ const onReset = () => {
 }
 
 const onCheckStore = async (): Promise<boolean> => {
-  const response = await getDatabase({
+  const response = await getDatabase('store', {
     page_size: 1
   })
   return response?.results[0].properties.status.status.name.toLowerCase() === 'open'
@@ -124,7 +124,7 @@ const onCheckProfileAddress = () => {
   return false
 }
 const onGetMenu = async () => {
-  const response = await getDatabase({
+  const response = await getDatabase('product', {
     sorts: [
       {
         property: 'id',
