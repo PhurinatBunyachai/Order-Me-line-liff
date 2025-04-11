@@ -4,7 +4,6 @@ import { storeToRefs } from 'pinia'
 import { useNotion } from '@/composables/useNotion'
 import { useProfileStore } from '@/stores/profile'
 import { Button } from '@/components/ui/button'
-import { Loader2 } from 'lucide-vue-next'
 
 interface OrderItem {
   id: string
@@ -76,9 +75,14 @@ const formatDate = (dateString: string) => {
       <Button @click="$router.push('/')" variant="outline" size="sm">Back to Home</Button>
     </div>
 
-    <div v-if="isLoading" class="flex items-center justify-center py-10">
-      <Loader2 class="mr-2 h-8 w-8 animate-spin" />
-      <span>Loading orders...</span>
+    <div v-if="isLoading" class="flex items-center justify-center">
+      <div class="w-full space-y-3">
+        <div
+          v-for="n in 5"
+          :key="n"
+          class="h-[8rem] w-full animate-pulse rounded-md bg-gray-200"
+        ></div>
+      </div>
     </div>
 
     <div v-else-if="orders.length === 0" class="rounded-lg border border-dashed p-8 text-center">
