@@ -103,6 +103,22 @@ const onSubmit = async () => {
   }
   carts.value = []
   isOpenCart.value = false
+  toast({
+    title: 'Order Success',
+    description: 'Your order has been placed successfully.',
+    action: h(
+      ToastAction,
+      {
+        altText: 'View Order',
+        onClick: () => {
+          window.location.href = '/order-history'
+        }
+      },
+      {
+        default: () => 'View Order'
+      }
+    )
+  })
   await onReset
 }
 const onRemoveFromCart = (index: number) => {
