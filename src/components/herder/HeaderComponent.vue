@@ -18,7 +18,7 @@ const isAvatarMenuOpen = ref<boolean>(false)
 </script>
 
 <template>
-  <div class="h-[50px] w-screen bg-primary">
+  <div class="sticky top-0 z-50 block h-[50px] w-full bg-primary">
     <div class="flex h-full w-full flex-row items-center justify-between px-5">
       <div class="flex flex-row items-center gap-3" @click="$router.push('/')">
         <img src="/logo.png" alt="logo" class="h-8 w-8 rounded-full bg-white" />
