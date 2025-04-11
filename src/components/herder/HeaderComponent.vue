@@ -20,7 +20,7 @@ const isAvatarMenuOpen = ref<boolean>(false)
 <template>
   <div class="h-[50px] w-screen bg-primary">
     <div class="flex h-full w-full flex-row items-center justify-between px-5">
-      <div class="flex flex-row items-center gap-3">
+      <div class="flex flex-row items-center gap-3" @click="$router.push('/')">
         <img src="/logo.png" alt="logo" class="h-8 w-8 rounded-full bg-white" />
         <div class="text-lg font-semibold text-white">{{ title }}</div>
       </div>
