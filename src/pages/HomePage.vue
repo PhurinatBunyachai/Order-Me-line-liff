@@ -25,7 +25,7 @@ import type { Product, ProductCart } from '@/types'
 import { useProductStore } from '@/stores/product'
 import { useProfileStore } from '@/stores/profile'
 import { useNotion } from '@/composables/useNotion'
-import { Loader2 } from 'lucide-vue-next'
+import { Loader2, ShoppingCart } from 'lucide-vue-next'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { ToastAction } from '@/components/ui/toast'
 const { toast } = useToast()
@@ -171,7 +171,7 @@ const onGetMenu = async () => {
         class="fixed bottom-0 left-0 right-0 flex cursor-pointer items-center justify-center rounded-t-lg bg-primary p-4 text-primary-foreground shadow-lg transition-colors hover:bg-primary/90"
         @click="isOpenCart = true"
       >
-        <!-- <ShoppingCart class="mr-2 h-5 w-5" /> -->
+        <ShoppingCart class="mr-2 h-5 w-5" />
         <span>My Cart ({{ totalPrice }} THB)</span>
       </div>
     </div>

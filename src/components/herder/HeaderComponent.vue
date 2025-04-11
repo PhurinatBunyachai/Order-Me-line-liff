@@ -18,13 +18,13 @@ const isAvatarMenuOpen = ref<boolean>(false)
 </script>
 
 <template>
-  <div class="h-[50px] w-screen bg-green-600">
-    <div class="flex h-full w-full flex-row items-center justify-between px-10">
-      <div></div>
+  <div class="h-[50px] w-screen bg-primary">
+    <div class="flex h-full w-full flex-row items-center justify-between px-5">
       <div class="flex flex-row items-center gap-3">
+        <img src="/logo.png" alt="logo" class="h-8 w-8 rounded-full bg-white" />
         <div class="text-lg font-semibold text-white">{{ title }}</div>
       </div>
-      <div class="mt-2 flex items-center justify-center">
+      <div class="mt-1 flex items-center justify-center">
         <DropdownMenu v-model:open="isAvatarMenuOpen">
           <DropdownMenuTrigger>
             <Avatar>
