@@ -38,7 +38,6 @@ const fetchOrders = async () => {
         }
       }
     })
-    console.log(response)
     if (response && response.results) {
       const orderResult = response.results.map((result) => {
         const properties = result.properties
