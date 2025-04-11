@@ -34,6 +34,9 @@ const isAvatarMenuOpen = ref<boolean>(false)
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem @click="$router.push('/profile')">Your Profile</DropdownMenuItem>
+            <DropdownMenuItem @click="$router.push('/order-history')"
+              >Order History</DropdownMenuItem
+            >
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
