@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useNotion } from '@/composables/useNotion'
 import { useProfileStore } from '@/stores/profile'
 import { Button } from '@/components/ui/button'
+import { RefreshCw } from 'lucide-vue-next'
 
 interface OrderItem {
   id: string
@@ -77,7 +78,14 @@ const formatDate = (dateString: string) => {
 <template>
   <div class="container mx-auto p-4">
     <div class="mb-6 flex items-center justify-between">
-      <h1 class="text-2xl font-bold">Order History</h1>
+      <div class="flex items-center gap-2">
+        <h1 class="text-2xl font-bold">Order History</h1>
+        <RefreshCw
+          @click="fetchOrders"
+          class="i-lucide-refresh-cw h-4 w-4"
+          :class="{ 'animate-spin': isLoading }"
+        />
+      </div>
       <Button @click="$router.push('/')" variant="outline" size="sm">Back to Home</Button>
     </div>
 
