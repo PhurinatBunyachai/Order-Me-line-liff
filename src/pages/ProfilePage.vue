@@ -66,6 +66,9 @@ const saveProfile = () => {
       </div>
 
       <Button @click="saveProfile" class="mt-4 w-full">Save Profile</Button>
+      <Button @click="$router.push('/order-history')" class="mt-4 w-full" variant="secondary"
+        >View Order History</Button
+      >
       <Button @click="$router.push('/')" class="mt-4 w-full" variant="outline">Back to Home</Button>
     </div>
   </div>

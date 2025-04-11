@@ -250,6 +250,9 @@ const onGetMenu = async () => {
             <Loader2 v-if="isProcess" class="mr-2 h-4 w-4 animate-spin" />
             Submit Order
           </Button>
+          <Button @click="$router.push('/order-history')" class="mt-2 w-full" variant="outline">
+            View Order History
+          </Button>
           <Button :disabled="isProcess" @click="isOpenCart = false" variant="outline">
             <Loader2 v-if="isProcess" class="mr-2 h-4 w-4 animate-spin" />
             Close

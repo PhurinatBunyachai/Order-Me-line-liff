@@ -79,7 +79,7 @@ export const useNotion = () => {
           pageObj: {
             parent: { type: 'database_id', database_id: orderDatabaseId },
             properties: {
-              'Order Name': {
+              order_name: {
                 title: [
                   {
                     text: {
@@ -88,10 +88,10 @@ export const useNotion = () => {
                   }
                 ]
               },
-              Sweetness: {
+              sweetness: {
                 number: cart.sweetness
               },
-              'User ID': {
+              user_id: {
                 rich_text: [
                   {
                     text: {
@@ -100,7 +100,7 @@ export const useNotion = () => {
                   }
                 ]
               },
-              Note: {
+              note: {
                 rich_text: [
                   {
                     text: {
@@ -109,7 +109,7 @@ export const useNotion = () => {
                   }
                 ]
               },
-              Buliding: {
+              buliding: {
                 rich_text: [
                   {
                     text: {
@@ -118,7 +118,7 @@ export const useNotion = () => {
                   }
                 ]
               },
-              'Room ID': {
+              room_id: {
                 rich_text: [
                   {
                     text: {
@@ -127,7 +127,7 @@ export const useNotion = () => {
                   }
                 ]
               },
-              Tel: {
+              tel: {
                 rich_text: [
                   {
                     text: {
@@ -136,7 +136,7 @@ export const useNotion = () => {
                   }
                 ]
               },
-              'Order Date': {
+              order_date: {
                 date: {
                   start: new Date().toISOString()
                 }

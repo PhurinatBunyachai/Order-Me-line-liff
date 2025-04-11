@@ -44,6 +44,15 @@ export interface Properties {
   description: RichTextProperty
   image: FileProperty
   available: StatusProperty
+
+  //order DB
+  order_name: TitleProperty
+  sweetness: NumberProperty
+  buliding: RichTextProperty
+  room_id: RichTextProperty
+  tel: RichTextProperty
+  note: RichTextProperty
+  order_date: DateProperty
 }
 
 export interface NumberProperty {
@@ -67,6 +76,12 @@ export interface UniqueIDProperty {
   id: string
   type: 'unique_id'
   unique_id: uniqueID
+}
+
+export interface DateProperty {
+  id: string
+  type: 'date'
+  date: DateNotion
 }
 
 export interface Status {
@@ -124,4 +139,10 @@ export interface File {
 export interface uniqueID {
   number: number
   prefix: string | null
+}
+
+export interface DateNotion {
+  end: string | null
+  start: string | null
+  time_zone: string | null
 }
