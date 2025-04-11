@@ -24,6 +24,7 @@ import { ProductCard } from '@/components/product'
 import type { Product, ProductCart } from '@/types'
 import { useProductStore } from '@/stores/product'
 import { useProfileStore } from '@/stores/profile'
+import { useCartStore } from '@/stores/cart'
 import { useNotion } from '@/composables/useNotion'
 import { Loader2, ShoppingCart } from 'lucide-vue-next'
 import { useToast } from '@/components/ui/toast/use-toast'
@@ -31,8 +32,10 @@ import { ToastAction } from '@/components/ui/toast'
 const { toast } = useToast()
 const productStore = useProductStore()
 const profileStore = useProfileStore()
+const cartStore = useCartStore()
 const { products } = storeToRefs(productStore)
 const { profile, profileAddress } = storeToRefs(profileStore)
+const { carts } = storeToRefs(cartStore)
 const { initNotion, updateDatabase, getDatabase, isLoading, isProcess } = useNotion()
 
 onMounted(async () => {
@@ -44,7 +47,6 @@ const isOpenProduct = ref<boolean>(false)
 const isOpenCart = ref<boolean>(false)
 const productSelect = ref<ProductCart>()
 const totalPrice = computed(() => carts.value.reduce((acc, cart) => acc + cart.price, 0))
-let carts = ref<ProductCart[]>([])
 let level = ref()
 let note = ref('')
 
@@ -107,7 +109,7 @@ const onRemoveFromCart = (index: number) => {
 const onReset = () => {
   isOpenProduct.value = false
   productSelect.value = undefined
-  level.value = undefined
+  level.value = null
   note.value = ''
 }
 
@@ -185,7 +187,9 @@ const onGetMenu = async () => {
         <div class="m-h-[500px] px-4">
           <div class="flex flex-col">
             <div class="mb-2 grid w-full max-w-sm items-center gap-1">
-              <label for="level" class="text-sm">Sweetness</label>
+              <label for="level" class="text-sm"
+                >Sweetness <span class="text-red-500">*</span>
+              </label>
               <Select id="level" v-model="level">
                 <SelectTrigger>
                   <SelectValue placeholder="Select a Level" />
@@ -209,7 +213,9 @@ const onGetMenu = async () => {
           </div>
         </div>
         <DrawerFooter>
-          <Button @click="onAddToCart">Add To Cart ({{ productSelect?.price }} THB)</Button>
+          <Button :disabled="!level && !(level >= 0)" @click="onAddToCart"
+            >Add To Cart ({{ productSelect?.price }} THB)</Button
+          >
           <Button @click="onReset" variant="outline">Cancel</Button>
         </DrawerFooter>
       </DrawerContent>
