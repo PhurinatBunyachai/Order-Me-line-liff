@@ -170,23 +170,25 @@ const onGetMenu = async () => {
 <template>
   <div>
     <h1 class="mb-2 mt-2 w-full text-center">Menu</h1>
-    <div class="grid w-full grid-cols-2 gap-2 px-2">
-      <template v-if="isLoading">
-        <div
-          v-for="n in 8"
-          :key="n"
-          class="h-[180px] w-[180px] animate-pulse rounded-lg bg-gray-200"
-        ></div>
-      </template>
-      <template v-else>
-        <ProductCard
-          v-for="product in products"
-          :product="product"
-          :carts="carts"
-          :key="product.id"
-          @click="onSelectProduct(product)"
-        />
-      </template>
+    <div class="container h-[calc(100vh-150px)] overflow-y-auto">
+      <div class="grid w-full grid-cols-2 gap-2 px-2">
+        <template v-if="isLoading">
+          <div
+            v-for="n in 8"
+            :key="n"
+            class="h-[180px] w-[180px] animate-pulse rounded-lg bg-gray-200"
+          ></div>
+        </template>
+        <template v-else>
+          <ProductCard
+            v-for="product in products"
+            :product="product"
+            :carts="carts"
+            :key="product.id"
+            @click="onSelectProduct(product)"
+          />
+        </template>
+      </div>
     </div>
 
     <div class="absolute bottom-0 min-w-full">
