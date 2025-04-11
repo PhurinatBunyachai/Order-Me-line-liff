@@ -170,7 +170,7 @@ const onGetMenu = async () => {
 <template>
   <div>
     <h1 class="mb-2 mt-2 w-full text-center">Menu</h1>
-    <div class="container h-[calc(100vh-150px)] overflow-y-auto">
+    <div class="container h-[calc(100vh-10rem)] overflow-y-auto">
       <div class="grid w-full grid-cols-2 gap-2 px-2">
         <template v-if="isLoading">
           <div
