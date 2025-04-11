@@ -1,13 +1,20 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Header } from '@/components/herder'
 import { useLiff } from '@/composables/useLiff'
 import { useProfileStore } from '@/stores/profile'
-import {Toaster} from '@/components/ui/toast'
-const { getProfile, profile } = useLiff()
+import { Toaster } from '@/components/ui/toast'
+const { getProfile, profile, isInClient, initialize } = useLiff()
 const profileStore = useProfileStore()
+const isLoading = ref(true)
 
 onMounted(async () => {
+  // Initialize LIFF SDK first
+  await initialize()
+
+  if (isInClient.value) {
+    console.log('in client')
+  }
   await getProfile()
 
   await profileStore.updateProfile({
@@ -16,6 +23,8 @@ onMounted(async () => {
     pictureUrl: profile.value.pictureUrl,
     statusMessage: profile.value.statusMessage
   })
+
+  isLoading.value = false
 })
 </script>
 
