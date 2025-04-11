@@ -25,15 +25,22 @@ export const useLiff = () => {
       isInitialized.value = true
       isInClient.value = liff.isInClient()
 
-      if (!liff.isLoggedIn()) {
-        liff.login()
-      }
+      // if (!liff.isLoggedIn()) {
+      //   liff.login()
+      // }
     } catch (err) {
       error.value = err as Error
       console.error('LIFF initialization failed', err)
     }
   }
-
+  const login = async () => {
+    if (!isInitialized.value) {
+      await initialize()
+    }
+    if (!liff.isLoggedIn()) {
+      liff.login()
+    }
+  }
   const getProfile = async () => {
     try {
       if (!isInitialized.value) {
@@ -59,6 +66,7 @@ export const useLiff = () => {
     initialize,
     getProfile,
     closeWindow,
-    isInClient
+    isInClient,
+    login
   }
 }
