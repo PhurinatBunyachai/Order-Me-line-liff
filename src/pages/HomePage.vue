@@ -92,7 +92,10 @@ const onSubmit = async () => {
 
   const isOpen = await onCheckStore()
   if (!isOpen) {
-    alert('Store is closed')
+    toast({
+      title: 'Store Closed',
+      description: 'Sorry, the store is currently closed. Please try again later.'
+    })
     return
   }
   for (let cart of carts.value) {
@@ -109,14 +112,16 @@ const onRemoveFromCart = (index: number) => {
 const onReset = () => {
   isOpenProduct.value = false
   productSelect.value = undefined
-  level.value = null
+  level.value = undefined
   note.value = ''
 }
 
 const onCheckStore = async (): Promise<boolean> => {
+  isProcess.value = true
   const response = await getDatabase('store', {
     page_size: 1
   })
+  isProcess.value = false
   return response?.results[0].properties.status.status.name.toLowerCase() === 'open'
 }
 const onCheckProfileAddress = () => {
@@ -173,8 +178,13 @@ const onGetMenu = async () => {
         class="fixed bottom-0 left-0 right-0 flex cursor-pointer items-center justify-center rounded-t-lg bg-primary p-4 text-primary-foreground shadow-lg transition-colors hover:bg-primary/90"
         @click="isOpenCart = true"
       >
-        <ShoppingCart class="mr-2 h-5 w-5" />
-        <span>My Cart ({{ totalPrice }} THB)</span>
+        <template v-if="isLoading">
+          <Loader2 class="mr-2 h-4 w-4 animate-spin" /> Loading
+        </template>
+        <template v-if="!isLoading">
+          <ShoppingCart class="mr-2 h-5 w-5" />
+          <span>My Cart ({{ totalPrice }} THB)</span>
+        </template>
       </div>
     </div>
 

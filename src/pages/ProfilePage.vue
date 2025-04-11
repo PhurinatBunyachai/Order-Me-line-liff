@@ -3,9 +3,11 @@ import { storeToRefs } from 'pinia'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useProfileStore } from '@/stores/profile'
+import { useToast } from '@/components/ui/toast/use-toast'
 
 const profileStore = useProfileStore()
 const { profile, profileAddress } = storeToRefs(profileStore)
+const { toast } = useToast()
 
 const saveProfile = () => {
   // Update the profile store with the new values
@@ -16,7 +18,10 @@ const saveProfile = () => {
   })
 
   // Show success message or redirect
-  alert('Profile saved successfully!')
+  toast({
+    title: 'Success',
+    description: 'Profile saved successfully!'
+  })
 }
 </script>
 
