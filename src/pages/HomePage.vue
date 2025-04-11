@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, h } from 'vue'
+import { ref, onMounted, h } from 'vue'
 import { storeToRefs } from 'pinia'
 import {
   Drawer,
@@ -35,7 +35,7 @@ const profileStore = useProfileStore()
 const cartStore = useCartStore()
 const { products } = storeToRefs(productStore)
 const { profile, profileAddress } = storeToRefs(profileStore)
-const { carts } = storeToRefs(cartStore)
+const { carts, totalPrice } = storeToRefs(cartStore)
 const { initNotion, updateDatabase, getDatabase, isLoading, isProcess } = useNotion()
 
 onMounted(async () => {
@@ -46,7 +46,7 @@ onMounted(async () => {
 const isOpenProduct = ref<boolean>(false)
 const isOpenCart = ref<boolean>(false)
 const productSelect = ref<ProductCart>()
-const totalPrice = computed(() => carts.value.reduce((acc, cart) => acc + cart.price, 0))
+
 let level = ref()
 let note = ref('')
 
