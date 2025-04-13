@@ -38,7 +38,7 @@ router.beforeEach(async (to, _, next) => {
   if (to.path === '/line-only') {
     return next()
   }
-  if (isProd && !isInClient) {
+  if (isProd && !isInClient.value) {
     return next({ name: 'line-only' })
   } else {
     return next()
