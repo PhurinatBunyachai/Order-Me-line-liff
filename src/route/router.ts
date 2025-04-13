@@ -32,7 +32,7 @@ export const router = createRouter({
 
 const { isInClient, initialize } = useLiff()
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _, next) => {
   await initialize()
   if (to.path === '/line-only') {
     return next()
