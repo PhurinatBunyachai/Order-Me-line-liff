@@ -31,7 +31,7 @@ const handleImageError = () => {
         <span class="rounded-full bg-gray-500 px-3 py-1 text-sm text-white"> Out of Stock </span>
       </div>
     </div>
-    <div class="relative aspect-video h-20 w-full overflow-hidden rounded-t-lg">
+    <div class="relative aspect-square w-full overflow-hidden rounded-t-lg">
       <img
         :src="product.image"
         :alt="product.name"
