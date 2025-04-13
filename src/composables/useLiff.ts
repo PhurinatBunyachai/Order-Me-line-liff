@@ -8,7 +8,7 @@ export const useLiff = () => {
   const profile = ref<Profile>(<Profile>{})
   const error = ref<Error | null>(null)
   const isInClient = ref<boolean>(false)
-
+  const isProd = import.meta.env.PROD
   const initialize = async () => {
     const liffId = import.meta.env.APP_LIFF_ID
 
@@ -19,7 +19,7 @@ export const useLiff = () => {
 
       await liff.init({
         liffId,
-        withLoginOnExternalBrowser: true
+        withLoginOnExternalBrowser: !isProd
       })
 
       isInitialized.value = true
