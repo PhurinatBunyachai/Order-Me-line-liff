@@ -34,7 +34,6 @@ const { isInClient, initialize } = useLiff()
 
 router.beforeEach(async (to, _, next) => {
   await initialize()
-  console.log(isInClient.value)
   if (to.path === '/line-only') {
     return next()
   }
