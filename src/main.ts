@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import { router } from '@/route/router.ts'
-import { useLiff } from '@/composables/useLiff.ts'
+import { useLiff } from '@/features/shared/composables/useLiff'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 

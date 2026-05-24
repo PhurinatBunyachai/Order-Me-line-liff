@@ -1,27 +1,27 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import { useLiff } from '@/composables/useLiff'
+import { useLiff } from '@/features/shared/composables/useLiff'
 
 const isProd = import.meta.env.PROD
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import('@/pages/HomePage.vue')
+    component: () => import('@/features/home/HomePage.vue')
   },
   {
     path: '/profile',
     name: 'profile',
-    component: () => import('@/pages/ProfilePage.vue')
+    component: () => import('@/features/profile/ProfilePage.vue')
   },
   {
     path: '/order-history',
     name: 'order-history',
-    component: () => import('@/pages/OrderHistoryPage.vue')
+    component: () => import('@/features/order-history/OrderHistoryPage.vue')
   },
   {
     path: '/line-only',
     name: 'line-only',
-    component: () => import('@/pages/LineOnlyPage.vue')
+    component: () => import('@/features/line-only/LineOnlyPage.vue')
   }
 ]
 

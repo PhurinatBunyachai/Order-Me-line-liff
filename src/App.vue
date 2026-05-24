@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { Header } from '@/components/herder'
-import { useLiff } from '@/composables/useLiff'
-import { useProfileStore } from '@/stores/profile'
-import { Toaster } from '@/components/ui/toast'
+import { Header } from '@/features/home/components/header'
+import { useLiff } from '@/features/shared/composables/useLiff'
+import { useProfileStore } from '@/features/profile/stores/profile'
+import { Toaster } from '@/components/toast'
 const { getProfile, profile, login, initialize } = useLiff()
 const profileStore = useProfileStore()
 const isLoading = ref(true)
