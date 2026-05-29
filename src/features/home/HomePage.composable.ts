@@ -7,6 +7,10 @@ import { useProductStore } from '@/features/home/stores/product'
 import { useProfileStore } from '@/features/profile/stores/profile'
 import { useCartStore } from '@/features/home/stores/cart'
 import { useNotion } from '@/features/shared/composables/useNotion'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { orderFormSchema } from '@/features/home/schemas/HomePage.schema'
+import { profileAddressSchema } from '@/features/profile/schemas/ProfilePage.schema'
 
 export const useHomePage = () => {
   const { toast } = useToast()
@@ -21,23 +25,25 @@ export const useHomePage = () => {
   const isOpenProduct = ref<boolean>(false)
   const isOpenCart = ref<boolean>(false)
   const productSelect = ref<ProductCart>()
-  const level = ref()
-  const note = ref('')
+  const { handleSubmit, resetForm } = useForm({
+    validationSchema: toTypedSchema(orderFormSchema)
+  })
 
   const onSelectProduct = (product: Product) => {
+    resetForm()
     isOpenProduct.value = !isOpenProduct.value
     productSelect.value = product
   }
 
-  const onAddToCart = () => {
+  const onAddToCart = handleSubmit((values) => {
     if (productSelect.value) {
       carts.value = [
         ...carts.value,
-        { ...productSelect.value, sweetness: level.value, note: note.value }
+        { ...productSelect.value, sweetness: values.sweetness, note: values.note }
       ]
     }
     onReset()
-  }
+  })
 
   const onSubmit = async () => {
     if (!carts.value.length) return
@@ -99,8 +105,7 @@ export const useHomePage = () => {
   const onReset = () => {
     isOpenProduct.value = false
     productSelect.value = undefined
-    level.value = undefined
-    note.value = ''
+    resetForm()
   }
 
   const onCheckStore = async (): Promise<boolean> => {
@@ -111,7 +116,7 @@ export const useHomePage = () => {
   }
 
   const onCheckProfileAddress = () => {
-    return !!(profileAddress.value.building && profileAddress.value.roomId && profileAddress.value.tel)
+    return profileAddressSchema.safeParse(profileAddress.value).success
   }
 
   const onGetMenu = async () => {
@@ -145,8 +150,6 @@ export const useHomePage = () => {
     isOpenProduct,
     isOpenCart,
     productSelect,
-    level,
-    note,
     onSelectProduct,
     onAddToCart,
     onSubmit,

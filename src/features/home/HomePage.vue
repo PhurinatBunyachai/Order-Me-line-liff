@@ -20,6 +20,7 @@ import { Button } from '@/components/button'
 import { Input } from '@/components/input'
 import { ProductCard } from '@/features/home/components/product-card'
 import { Loader2, ShoppingCart } from 'lucide-vue-next'
+import { Field } from 'vee-validate'
 import { useHomePage } from './HomePage.composable'
 
 const {
@@ -31,8 +32,6 @@ const {
   isOpenProduct,
   isOpenCart,
   productSelect,
-  level,
-  note,
   onSelectProduct,
   onAddToCart,
   onSubmit,
@@ -92,32 +91,42 @@ const {
               <label for="level" class="text-sm"
                 >Sweetness <span class="text-red-500">*</span>
               </label>
-              <Select id="level" v-model="level">
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a Level" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Level</SelectLabel>
-                    <SelectItem :value="100"> 100 % </SelectItem>
-                    <SelectItem :value="75"> 75 % </SelectItem>
-                    <SelectItem :value="50"> 50 % </SelectItem>
-                    <SelectItem :value="25"> 25 % </SelectItem>
-                    <SelectItem :value="0"> 0 % </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <Field name="sweetness" v-slot="{ componentField, errorMessage }">
+                <Select id="level" v-bind="componentField">
+                  <SelectTrigger :class="errorMessage && 'border-red-500'">
+                    <SelectValue placeholder="Select a Level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Level</SelectLabel>
+                      <SelectItem :value="100"> 100 % </SelectItem>
+                      <SelectItem :value="75"> 75 % </SelectItem>
+                      <SelectItem :value="50"> 50 % </SelectItem>
+                      <SelectItem :value="25"> 25 % </SelectItem>
+                      <SelectItem :value="0"> 0 % </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <p v-if="errorMessage" class="text-sm text-red-500">{{ errorMessage }}</p>
+              </Field>
             </div>
             <div class="grid w-full max-w-sm items-center gap-1">
               <label for="note" class="text-sm">Note</label>
-              <Input id="note" type="text" placeholder="Note" v-model="note" />
+              <Field name="note" v-slot="{ componentField, errorMessage }">
+                <Input
+                  id="note"
+                  type="text"
+                  placeholder="Note"
+                  v-bind="componentField"
+                  :class="errorMessage && 'border-red-500'"
+                />
+                <p v-if="errorMessage" class="text-sm text-red-500">{{ errorMessage }}</p>
+              </Field>
             </div>
           </div>
         </div>
         <DrawerFooter>
-          <Button :disabled="!level && !(level >= 0)" @click="onAddToCart"
-            >Add To Cart ({{ productSelect?.price }} THB)</Button
-          >
+          <Button @click="onAddToCart">Add To Cart ({{ productSelect?.price }} THB)</Button>
           <Button @click="onReset" variant="outline">Cancel</Button>
         </DrawerFooter>
       </DrawerContent>
