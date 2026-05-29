@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { Field } from 'vee-validate'
 import { Button } from '@/components/button'
 import { Input } from '@/components/input'
 import { useProfilePage } from './ProfilePage.composable'
 
-const { profile, profileAddress, saveProfile } = useProfilePage()
+const { profile, saveProfile } = useProfilePage()
 </script>
 
 <template>
@@ -20,42 +21,57 @@ const { profile, profileAddress, saveProfile } = useProfilePage()
       </div>
     </div>
 
-    <div class="space-y-4">
+    <form class="space-y-4" @submit="saveProfile">
       <div>
         <label for="building" class="mb-2 block text-sm font-medium">Building</label>
-        <Input
-          id="building"
-          v-model="profileAddress.building"
-          placeholder="Enter your building (A B C D)"
-          class="w-full"
-        />
+        <Field name="building" v-slot="{ componentField, errorMessage }">
+          <Input
+            id="building"
+            v-bind="componentField"
+            placeholder="Enter your building (A B C D)"
+            :class="['w-full', errorMessage && 'border-red-500']"
+          />
+          <p v-if="errorMessage" class="mt-1 text-sm text-red-500">{{ errorMessage }}</p>
+        </Field>
       </div>
 
       <div>
         <label for="roomId" class="mb-2 block text-sm font-medium">Room ID</label>
-        <Input
-          id="roomId"
-          v-model="profileAddress.roomId"
-          placeholder="Enter your Room ID (2XX)"
-          class="w-full"
-        />
+        <Field name="roomId" v-slot="{ componentField, errorMessage }">
+          <Input
+            id="roomId"
+            v-bind="componentField"
+            placeholder="Enter your Room ID (2XX)"
+            :class="['w-full', errorMessage && 'border-red-500']"
+          />
+          <p v-if="errorMessage" class="mt-1 text-sm text-red-500">{{ errorMessage }}</p>
+        </Field>
       </div>
 
       <div>
         <label for="tel" class="mb-2 block text-sm font-medium">Tel</label>
-        <Input
-          id="tel"
-          v-model="profileAddress.tel"
-          placeholder="Enter your telephone number"
-          class="w-full"
-        />
+        <Field name="tel" v-slot="{ componentField, errorMessage }">
+          <Input
+            id="tel"
+            v-bind="componentField"
+            placeholder="Enter your telephone number"
+            :class="['w-full', errorMessage && 'border-red-500']"
+          />
+          <p v-if="errorMessage" class="mt-1 text-sm text-red-500">{{ errorMessage }}</p>
+        </Field>
       </div>
 
-      <Button @click="saveProfile" class="mt-4 w-full">Save Profile</Button>
-      <Button @click="$router.push('/order-history')" class="mt-4 w-full" variant="secondary"
+      <Button type="submit" class="mt-4 w-full">Save Profile</Button>
+      <Button
+        type="button"
+        @click="$router.push('/order-history')"
+        class="mt-4 w-full"
+        variant="secondary"
         >View Order History</Button
       >
-      <Button @click="$router.push('/')" class="mt-4 w-full" variant="outline">Back to Home</Button>
-    </div>
+      <Button type="button" @click="$router.push('/')" class="mt-4 w-full" variant="outline"
+        >Back to Home</Button
+      >
+    </form>
   </div>
 </template>
